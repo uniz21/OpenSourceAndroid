@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setTitle("당근과 채찍!!");
+        setTitle("당근과 채찍!_!");
 
         ImageButton drawer_open = (ImageButton) findViewById(R.id.drawer_open);
 
