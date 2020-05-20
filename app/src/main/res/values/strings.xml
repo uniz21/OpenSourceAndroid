@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">OpenSourceAndroidProject</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">유저 닉네임 가져올 부분</string>
+    <string name="nav_header_subtitle">로그인 로그아웃 </string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+</resources>
