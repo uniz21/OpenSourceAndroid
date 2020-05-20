@@ -1,5 +1,6 @@
 package com.example.yoony.opensourceandroidproject;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -7,10 +8,21 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    ArrayList<SampleData> todoDataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +52,54 @@ public class MainActivity extends AppCompatActivity
                 drawer.openDrawer(navigationView);
             }
         });
+
+        //*****************************************************************************
+        this.InitializeToDoData();
+        ListView listView = (ListView)findViewById(R.id.listView);
+        final MyAdapter myAdapter = new MyAdapter(this,todoDataList);
+
+        listView.setAdapter(myAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(),myAdapter.getItem(position).getJob(),Toast.LENGTH_LONG).show();
+            }
+        });
+        //*****************************************************************************
     }
+
+    //*****************************************************************************
+    public void InitializeToDoData(){
+        todoDataList = new ArrayList<SampleData>();
+
+        todoDataList.add(new SampleData(Color.RED,"할일 1",false));
+        todoDataList.add(new SampleData(Color.BLACK,"할일 1",false));
+        todoDataList.add(new SampleData(Color.BLUE,"할일 1",false));
+        todoDataList.add(new SampleData(Color.GREEN,"할일 1",false));
+    }
+//    public static void setListViewHeightBasedOnChildren(ListView listView) {//height 분할
+//        ListAdapter listAdapter = listView.getAdapter();
+//        if (listAdapter == null) {
+//            // pre-condition
+//            return;
+//        }
+//
+//        int totalHeight = 0;
+//        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.AT_MOST);
+//
+//        for (int i = 0; i < listAdapter.getCount(); i++) {
+//            View listItem = listAdapter.getView(i, null, listView);
+//            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+//            totalHeight += listItem.getMeasuredHeight();
+//        }
+//
+//        ViewGroup.LayoutParams params = listView.getLayoutParams();
+//        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+//        listView.setLayoutParams(params);
+//        listView.requestLayout();
+//    }
+//    //*****************************************************************************
 
     @Override
     public void onBackPressed() {
