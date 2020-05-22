@@ -17,8 +17,12 @@
         android:src="@drawable/menu"
         android:layout_marginStart="15dp" />
 
-    <include
-        layout="@layout/content_main" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/content_fragment_layout" />
+    <!-- <include
+        layout="@layout/content_main" />-->
 
     <!--
     <android.support.design.widget.FloatingActionButton

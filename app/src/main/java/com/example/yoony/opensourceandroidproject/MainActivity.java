@@ -1,6 +1,7 @@
 package com.example.yoony.opensourceandroidproject;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -33,6 +34,10 @@ public class MainActivity extends AppCompatActivity
 
         final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentMain fragmentmain = new FragmentMain();
+        transaction.replace(R.id.content_fragment_layout, fragmentmain);
+        transaction.commit();
 
         drawer_open.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -59,17 +64,34 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_main) {
-            // Handle the main action
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            FragmentMain fragmentmain = new FragmentMain();
+            transaction.replace(R.id.content_fragment_layout, fragmentmain);
+            transaction.commit();
+
         } else if (id == R.id.nav_todo) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            FragmentTodo fragmenttodo = new FragmentTodo();
+            transaction.replace(R.id.content_fragment_layout, fragmenttodo);
+            transaction.commit();
 
         } else if (id == R.id.nav_goals) {
-
-        } else if (id == R.id.nav_community) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            FragmentGoals fragmentgoals = new FragmentGoals();
+            transaction.replace(R.id.content_fragment_layout, fragmentgoals);
+            transaction.commit();
 
         } else if (id == R.id.nav_shop) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            FragmentShop fragmentshop = new FragmentShop();
+            transaction.replace(R.id.content_fragment_layout, fragmentshop);
+            transaction.commit();
 
         } else if (id == R.id.nav_setting) {
-
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            FragmentSetting fragmentsetting = new FragmentSetting();
+            transaction.replace(R.id.content_fragment_layout, fragmentsetting);
+            transaction.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
