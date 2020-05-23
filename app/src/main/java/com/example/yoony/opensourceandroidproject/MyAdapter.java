@@ -40,7 +40,7 @@ public class MyAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = mLayoutInflater.inflate(R.layout.list_data,null);
+        View view = mLayoutInflater.inflate(R.layout.list_data,null);//리스트 양식 샘플
 
         LinearLayout questcolor = (LinearLayout)view.findViewById(R.id.questColor);
 
@@ -52,7 +52,7 @@ public class MyAdapter extends BaseAdapter {
 
         todo_thing.setText(sample.get(position).getJob());
 
-        isDone.setActivated(sample.get(position).isIschecked());
+        isDone.setActivated(sample.get(position).isChecked());
 
         return view;
     }

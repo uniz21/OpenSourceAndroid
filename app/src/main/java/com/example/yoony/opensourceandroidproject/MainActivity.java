@@ -1,12 +1,10 @@
 package com.example.yoony.opensourceandroidproject;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -16,19 +14,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,NavigationView.OnNavigationItemSelectedListener{
 
     Calendar cal = Calendar.getInstance();
     int maxDayOfMonth=cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-    int thisMonth=cal.get(Calendar.MONTH);
-
-    ArrayList<SampleData> todoDataList;//샘플 리스트 데이터
+    int thisDay=cal.get(Calendar.DAY_OF_MONTH);
+    int thisMonth=cal.get(Calendar.MONTH)+1;
 
     private static final String FRAGMENT_TAG = "FRAGMENT_TAG";
     private static final String KEY_NUMBER = "KEY_NUMBER";
@@ -38,17 +31,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onBackStackChanged() {
             FragmentManager fragmentManager = getSupportFragmentManager();
             int count = 0;
-            Log.d("s",fragmentManager.getFragments().toString());
             for(Fragment f:fragmentManager.getFragments()){
                 if(f!=null){
                     count++;
                 }
             }
             mNumber = count;
-            Log.d("MainActivity","onBackStackChanged mNumber=" + mNumber);
         }
     };
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,29 +69,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        //*****************************************************************************
-
-//        MyFragment todoListFragment = (MyFragment)getSupportFragmentManager().findFragmentById(R.id.listfragment); //리스트프레그먼트 화딱지나서 포기
-//        todoListFragment.setToToast(this,myAdapter);
-//        todoListFragment.setListAdapter(myAdapter);
-
-        //*****************************************************************************
-
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.addOnBackStackChangedListener(mListner);
+       // fragmentManager.addOnBackStackChangedListener(mListner);
         Fragment fragment = fragmentManager.findFragmentByTag(FRAGMENT_TAG);
-        Log.d("MainActivity","onCreate fragment ="+fragment+",mNumber ="+mNumber);
-//        if(savedInstanceState==null){//최초 프레그먼트 생성
-//            Log.d("enterIf","savedInstanceState=null");
-//            fragmentManager.beginTransaction()
-//                    .add(R.id.fragment_container,MyFragment.getInstace(mNumber),FRAGMENT_TAG)
-//                    .addToBackStack(null)
-//                    .commit();
-//        }
+        Log.d("MainActivity","onCreate fragment ="+fragment);
+        if(savedInstanceState==null){//초기 프레그먼트 생성
+            Log.d("enterIf","savedInstanceState=null");
+            fragmentManager.beginTransaction()
+                    .add(R.id.fragment_container,MyFragment.getInstace(thisDay),FRAGMENT_TAG)
+                    .addToBackStack(null)
+                    .commit();
+        }
 
         LinearLayout tabLayout = (LinearLayout)findViewById(R.id.tabWidget);
 
-        for(int i=0;i<maxDayOfMonth;i++){//해당월의 날짜 수 만큼 버튼 및 프레그먼트 생성
+        for(int i=0;i<maxDayOfMonth;i++){//해당월의 날짜 수 만큼 버튼 생성
 
             Button btn = new Button(this);//버튼 생성
             btn.setText((i+1)+"일");
@@ -109,37 +91,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             btn.setOnClickListener(this);
             tabLayout.addView(btn);
 
-            fragmentManager.beginTransaction()//프레그먼트 생성
-                    .add(R.id.fragment_container,MyFragment.getInstace(i+1))
-                    .addToBackStack(null)
-                    .commit();
         }
-
-
-        this.InitializeToDoData();
-        MyAdapter myAdapter = new MyAdapter(this,todoDataList);
-
-        ListView listView = (ListView)findViewById(R.id.listview);
-        listView.setAdapter(myAdapter);//어댑터 연결
 
 //        FragmentManager fragmentManager = getSupportFragmentManager();//프레그먼트 삭제
 //        fragmentManager.popBackStack();
 
-
-
-
-        //임의로 액티비티 호출 시점에 어느 프레그먼트를 프레임레이아웃에 띄울 것인지를 결정
-        //callFragment(FRAGMENT2);
-    }
-
-    //*****************************************************************************
-    public void InitializeToDoData(){//샘플 리스트 데이터
-        todoDataList = new ArrayList<SampleData>();
-
-        todoDataList.add(new SampleData(Color.RED,"할일 1",false));
-        todoDataList.add(new SampleData(Color.BLACK,"할일 1",false));
-        todoDataList.add(new SampleData(Color.BLUE,"할일 1",false));
-        todoDataList.add(new SampleData(Color.GREEN,"할일 1",false));
     }
 
     @Override
@@ -161,28 +117,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mNumber = savedInstanceState.getInt(KEY_NUMBER);
     }
 
-    //    public static void setListViewHeightBasedOnChildren(ListView listView) {//height 분할
-//        ListAdapter listAdapter = listView.getAdapter();
-//        if (listAdapter == null) {
-//            // pre-condition
-//            return;
-//        }
-//
-//        int totalHeight = 0;
-//        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.AT_MOST);
-//
-//        for (int i = 0; i < listAdapter.getCount(); i++) {
-//            View listItem = listAdapter.getView(i, null, listView);
-//            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-//            totalHeight += listItem.getMeasuredHeight();
-//        }
-//
-//        ViewGroup.LayoutParams params = listView.getLayoutParams();
-//        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-//        listView.setLayoutParams(params);
-//        listView.requestLayout();
-//    }
-//    //*****************************************************************************
     //탭 클릭시
     @Override
     public void onClick(View v) {
@@ -190,9 +124,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void callFragment(int fragment_no){//프래그먼트 전환
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        Log.d("transactionFragment",""+getSupportFragmentManager().getFragments().get((fragment_no%100)));
-        transaction.replace(R.id.fragment_container,getSupportFragmentManager().getFragments().get((fragment_no%100)));
+        int i=(fragment_no%100);
+        FragmentManager fragmentManager=getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.fragment_container,MyFragment.getInstace(i)).addToBackStack(null).commit();//replace로 했더니 프레그먼트매니저가 초기화된다.
+
     }
     @Override
     public void onBackPressed() {

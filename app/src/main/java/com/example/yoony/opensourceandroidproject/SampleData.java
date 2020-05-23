@@ -19,7 +19,7 @@ public class SampleData {
         return this.job;
     }
 
-    public boolean isIschecked() {
+    public boolean isChecked() {
         return this.ischecked;
     }
 }
