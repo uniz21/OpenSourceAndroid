@@ -23,6 +23,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int thisDay=cal.get(Calendar.DAY_OF_MONTH);
     int thisMonth=cal.get(Calendar.MONTH)+1;
 
+    int fragmentPageNow=0;
+
+    LinearLayout tabLayout,btnLayout;
+
     Button addListBtn,addBtn;
 
     private static final String FRAGMENT_TAG = "FRAGMENT_TAG";
@@ -47,6 +51,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("당근과 채찍");
+
+        tabLayout=(LinearLayout)findViewById(R.id.tabLayout);
+        btnLayout=(LinearLayout)findViewById(R.id.btnLayout);
 
         ImageButton drawer_open = (ImageButton) findViewById(R.id.drawer_open);
 
@@ -81,9 +88,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .add(R.id.fragment_container,MyFragment.getInstace(thisDay),FRAGMENT_TAG)
                     .addToBackStack(null)
                     .commit();
+            fragmentPageNow=thisDay;
         }
 
-        LinearLayout tabLayout = (LinearLayout)findViewById(R.id.tabWidget);
+        final LinearLayout tabLayout = (LinearLayout)findViewById(R.id.tabWidget);
 
         for(int i=0;i<maxDayOfMonth;i++){//해당월의 날짜 수 만큼 버튼 생성
 
@@ -100,16 +108,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 AddListFragment alFragment=new AddListFragment();
+                alFragment.getInstance(fragmentPageNow,tabLayout,btnLayout);
                 fragmentManager.beginTransaction().replace(R.id.fragment_container,alFragment).addToBackStack(null).commit();
+                tabLayout.setVisibility(View.INVISIBLE);
+                btnLayout.setVisibility(View.INVISIBLE);
             }
         });
-//        addBtn=(Button)findViewById(R.id.addBtn);
-//        addBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
 
 //        FragmentManager fragmentManager = getSupportFragmentManager();//프레그먼트 삭제
 //        fragmentManager.popBackStack();
@@ -145,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int i=(fragment_no%100);
         FragmentManager fragmentManager=getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container,MyFragment.getInstace(i)).addToBackStack(null).commit();
-
+        fragmentPageNow=i;
     }
     @Override
     public void onBackPressed() {
