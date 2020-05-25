@@ -35,6 +35,12 @@ public class MyFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.listfragment,null);
         ArrayList<SampleData> a=new ArrayList<SampleData>();//데이터베이스
+//        for(int i=0;i<a.size();i++){
+//            if (a.get(i).isChecked()){
+//                a.add(a.get(i));
+//                a.remove(i);
+//            }
+//        }
         a.add(new SampleData(Color.RED,"할일 1",false));
         a.add(new SampleData(Color.BLACK,"할일 1",false));
         a.add(new SampleData(Color.BLUE,"할일 1",false));
@@ -47,6 +53,7 @@ public class MyFragment extends Fragment {
 
         return view;
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

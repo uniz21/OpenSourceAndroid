@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int thisDay=cal.get(Calendar.DAY_OF_MONTH);
     int thisMonth=cal.get(Calendar.MONTH)+1;
 
+    Button addListBtn,addBtn;
+
     private static final String FRAGMENT_TAG = "FRAGMENT_TAG";
     private static final String KEY_NUMBER = "KEY_NUMBER";
     private  int mNumber=0;
@@ -69,8 +71,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-       // fragmentManager.addOnBackStackChangedListener(mListner);
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.addOnBackStackChangedListener(mListner);
         Fragment fragment = fragmentManager.findFragmentByTag(FRAGMENT_TAG);
         Log.d("MainActivity","onCreate fragment ="+fragment);
         if(savedInstanceState==null){//초기 프레그먼트 생성
@@ -92,6 +94,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             tabLayout.addView(btn);
 
         }
+
+        addListBtn=(Button)findViewById(R.id.addListBtn);
+        addListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddListFragment alFragment=new AddListFragment();
+                fragmentManager.beginTransaction().replace(R.id.fragment_container,alFragment).addToBackStack(null).commit();
+            }
+        });
+//        addBtn=(Button)findViewById(R.id.addBtn);
+//        addBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
 //        FragmentManager fragmentManager = getSupportFragmentManager();//프레그먼트 삭제
 //        fragmentManager.popBackStack();
@@ -126,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void callFragment(int fragment_no){//프래그먼트 전환
         int i=(fragment_no%100);
         FragmentManager fragmentManager=getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_container,MyFragment.getInstace(i)).addToBackStack(null).commit();//replace로 했더니 프레그먼트매니저가 초기화된다.
+        fragmentManager.beginTransaction().replace(R.id.fragment_container,MyFragment.getInstace(i)).addToBackStack(null).commit();
 
     }
     @Override
