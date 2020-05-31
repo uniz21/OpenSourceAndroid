@@ -4,35 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
     android:orientation="vertical"
     tools:context=".AddActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:text="최종목표"
-        android:textSize="26dp"
         android:textColor="#000"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"/>
+        android:textStyle="bold"
+        android:textSize="26dp" />
 
-    <EditText
-        android:id="@+id/edtGoal"
-        android:hint="목표를 입력하세요."
+    <TextView
+        android:id="@+id/tvGoal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:textSize="20dp"
-        android:theme="@style/EditTheme"/>
+        android:layout_marginLeft="15dp"
+        android:theme="@style/EditTheme"
+        android:textSize="22dp"
+        android:textColor="#000"/>
 
     <TextView
         android:id="@+id/text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
         android:text="세부목표"
         android:textColor="#000"
         android:textSize="26dp"
-        android:layout_marginTop="15dp"/>
+        android:textStyle="bold"/>
 
 
     <LinearLayout
@@ -41,36 +46,20 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"></LinearLayout>
 
-    <ImageButton
-        android:id="@+id/addSubBtn"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="30px"
-        android:background="@android:color/transparent"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_add_black_24dp" />
 
     <LinearLayout
-        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/addSubBtn"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="10dp">
 
-        <Button
-            android:id="@+id/btnNo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="cancel"/>
 
         <Button
             android:id="@+id/btnDone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="done"/>
+            android:text="done" />
 
     </LinearLayout>
 </LinearLayout>
