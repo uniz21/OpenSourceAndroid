@@ -11,8 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +84,10 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_main) {
             // Handle the camera action
         } else if (id == R.id.nav_todo) {
-
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            FragmentTodo fragmenttodo = new FragmentTodo();
+            transaction.replace(R.id.main_fragment, fragmenttodo);
+            transaction.commit();
         } else if (id == R.id.nav_goals) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             FragmentGoals fragmentgoals = new FragmentGoals();
