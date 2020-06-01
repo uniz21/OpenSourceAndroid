@@ -1,19 +1,23 @@
 package com.example.yoony.opensourceandroidproject;
 
 public class SampleData {
-    private int quest;
+    private int quest,id;
     private String job;
     private boolean ischecked;
 
-    public SampleData(int quest, String job, boolean ischecked){
+    public SampleData(int id,int quest, String job, int ischecked){
+        this.id=id;
         this.quest=quest;
         this.job=job;
-        this.ischecked=ischecked;
+        if(ischecked==0) this.ischecked=false;
+        else this.ischecked=true;
     }
 
     public int getQuest(){
         return this.quest;
     }
+
+    public int getId(){return this.id;}
 
     public String getJob(){
         return this.job;

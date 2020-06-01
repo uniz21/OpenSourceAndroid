@@ -1,5 +1,6 @@
 package com.example.yoony.opensourceandroidproject;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -35,17 +36,23 @@ public class MyFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.listfragment,null);
         ArrayList<SampleData> a=new ArrayList<SampleData>();//데이터베이스
-//        for(int i=0;i<a.size();i++){
-//            if (a.get(i).isChecked()){
-//                a.add(a.get(i));
-//                a.remove(i);
-//            }
-//        }
-        a.add(new SampleData(Color.RED,"할일 1",false));
-        a.add(new SampleData(Color.BLACK,"할일 1",false));
-        a.add(new SampleData(Color.BLUE,"할일 1",false));
-        a.add(new SampleData(Color.GREEN,"할일 1",false));
-
+        DBHelper dbHelper=new DBHelper(view.getContext(),"QuestApp.db",null,1);
+        if(dbHelper.selectTodo()!="") {
+            String temp[] = dbHelper.selectTodo().split("\n");
+            String data[][] = new String[5][temp.length];
+            for (int i = 0; i < temp.length; i++) {
+                Log.e("temp", temp[i]);
+                if(temp[i].split("\\|")[4].equals("1")){
+                    dbHelper.updateId(Integer.parseInt(temp[i].split("\\|")[0]));
+                    Log.e("updateId",dbHelper.selectTodo());
+                    temp=dbHelper.selectTodo().split("\n");
+                }
+                for (int k = 0; k < 5; k++) {
+                    data[k][i] = temp[i].split("\\|")[k];
+                }
+                a.add(new SampleData(Integer.parseInt(data[0][i]), Color.RED, data[1][i], Integer.parseInt(data[4][i])));
+            }
+        }
         MyAdapter myAdapter = new MyAdapter(getActivity(),a);
 
         ListView listView = (ListView)view.findViewById(R.id.listView);
