@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="round_corner_progress_bar_background_default">#5f5f5f</color>
+    <color name="round_corner_progress_bar_progress_default">#7f7f7f</color>
+    <color name="round_corner_progress_bar_secondary_progress_default">#00000000</color>
+    <declare-styleable name="AnimatedRoundCornerProgressBar">
+        <attr format="boolean" name="rcAnimationEnable"/>
+        <attr format="float" name="rcAnimationSpeedScale"/>
+    </declare-styleable>
+    <declare-styleable name="BaseRoundCornerProgressBar">
+        <attr format="boolean" name="rcReverse"/>
+        <attr format="float" name="rcProgress"/>
+        <attr format="float" name="rcMax"/>
+        <attr format="float" name="rcSecondaryProgress"/>
+        <attr format="dimension" name="rcBackgroundPadding"/>
+        <attr format="dimension" name="rcRadius"/>
+        <attr format="color" name="rcProgressColor"/>
+        <attr format="reference" name="rcProgressColors"/>
+        <attr format="color" name="rcSecondaryProgressColor"/>
+        <attr format="reference" name="rcSecondaryProgressColors"/>
+        <attr format="color" name="rcBackgroundColor"/>
+    </declare-styleable>
+    <declare-styleable name="IconRoundCornerProgressBar">
+        <attr format="integer" name="rcIconSrc"/>
+        <attr format="dimension" name="rcIconSize"/>
+        <attr format="dimension" name="rcIconWidth"/>
+        <attr format="dimension" name="rcIconHeight"/>
+        <attr format="dimension" name="rcIconPadding"/>
+        <attr format="dimension" name="rcIconPaddingLeft"/>
+        <attr format="dimension" name="rcIconPaddingRight"/>
+        <attr format="dimension" name="rcIconPaddingTop"/>
+        <attr format="dimension" name="rcIconPaddingBottom"/>
+        <attr format="color" name="rcIconBackgroundColor"/>
+    </declare-styleable>
+    <declare-styleable name="TextRoundCornerProgressBar">
+        <attr format="color" name="rcTextProgressColor"/>
+        <attr format="dimension" name="rcTextProgressSize"/>
+        <attr format="dimension" name="rcTextProgressMargin"/>
+        <attr format="string" name="rcTextProgress"/>
+        <attr format="enum" name="rcTextInsideGravity">
+            <enum name="start" value="0"/>
+            <enum name="end" value="1"/>
+        </attr>
+        <attr format="enum" name="rcTextOutsideGravity">
+            <enum name="start" value="0"/>
+            <enum name="end" value="1"/>
+        </attr>
+        <attr format="enum" name="rcTextPositionPriority">
+            <enum name="inside" value="0"/>
+            <enum name="outside" value="1"/>
+        </attr>
+    </declare-styleable>
+</resources>
