@@ -49,6 +49,8 @@
                 app:rcTextProgressColor="@color/sample_progress_text_color" />
         </LinearLayout>
 
+
+
         <LinearLayout
             style="@style/SampleCard"
             android:layout_width="wrap_content"
