@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/addlistfragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="메인퀘스트"/>
+
+    <EditText
+        android:id="@+id/quest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="MainQuest" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="날짜"/>
+
+    <DatePicker
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:datePickerMode="spinner"
+        android:calendarViewShown="false"></DatePicker>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="할일"/>
+
+    <EditText
+        android:id="@+id/job"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Job" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addBtn"
+        android:text="추가하기"
+        android:layout_gravity="center"/>
+
+</LinearLayout>
