@@ -17,7 +17,7 @@ import java.util.Calendar;
 public class FragmentTodo extends Fragment {
     Calendar cal = Calendar.getInstance();
     int maxDayOfMonth=cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-    int thisDay=cal.get(Calendar.DAY_OF_MONTH);
+    int thisDay=cal.get(Calendar.DAY_OF_MONTH)+1;
     int thisMonth=cal.get(Calendar.MONTH)+1;
 
     int fragmentPageNow=0;
@@ -50,6 +50,7 @@ public class FragmentTodo extends Fragment {
         tabLayout=(LinearLayout)view.findViewById(R.id.tabLayout);
         btnLayout=(LinearLayout)view.findViewById(R.id.btnLayout);
 
+        Log.d("maxDayOfMonth", ""+maxDayOfMonth);
         final FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.addOnBackStackChangedListener(mListner);
         Fragment fragment = fragmentManager.findFragmentByTag(FRAGMENT_TAG);
@@ -63,10 +64,10 @@ public class FragmentTodo extends Fragment {
             fragmentPageNow=thisDay;
         }
 
-        final LinearLayout tabLayout = (LinearLayout)view.findViewById(R.id.tabWidget);
+        final LinearLayout tabWidgetLayout = (LinearLayout)view.findViewById(R.id.tabWidget);
 
-        for(int i=0;i<maxDayOfMonth;i++){//해당월의 날짜 수 만큼 버튼 생성
-
+        for(int i=0;i<maxDayOfMonth;i++){//해당월의 날짜 수 만큼 버튼 생성//for문 실행 이상함
+            Log.d("for",""+i+1);
             Button btn = new Button(view.getContext());//버튼 생성
             btn.setText((i+1)+"일");
             btn.setId((thisMonth*100)+(i+1));
@@ -76,14 +77,14 @@ public class FragmentTodo extends Fragment {
                     callFragment(v.getId());
                 }
             });
-            tabLayout.addView(btn);
-
+            tabWidgetLayout.addView(btn);
         }
 
         addListBtn=(Button)view.findViewById(R.id.addListBtn);
         addListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {//리스너 미작동
+                Log.d("onclick","clicked");
                 AddListFragment alFragment=new AddListFragment();
                 alFragment.getInstance(fragmentPageNow,tabLayout,btnLayout);
                 fragmentManager.beginTransaction().replace(R.id.fragment_container,alFragment).addToBackStack(null).commit();
