@@ -33,6 +33,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
          */
 
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentMain fragmentmain = new FragmentMain();
+        transaction.replace(R.id.main_fragment, fragmentmain);
+        transaction.commit();
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -82,7 +87,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_main) {
-            // Handle the camera action
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            FragmentMain fragmentmain = new FragmentMain();
+            transaction.replace(R.id.main_fragment, fragmentmain);
+            transaction.commit();
         } else if (id == R.id.nav_todo) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             FragmentTodo fragmenttodo = new FragmentTodo();
@@ -99,7 +107,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             transaction.replace(R.id.main_fragment, fragmentshop);
             transaction.commit();
         } else if (id == R.id.nav_setting) {
-
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            FragmentSetting fragmentsetting = new FragmentSetting();
+            transaction.replace(R.id.main_fragment, fragmentsetting);
+            transaction.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

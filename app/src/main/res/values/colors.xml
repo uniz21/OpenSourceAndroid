@@ -15,6 +15,9 @@
     <color name="sample_progress_gradient_end">#E57373</color>
     <color name="sample_progress_text_color">#222222</color>
 
+    <color name="cursorColor">#a9d587</color>
+    <color name="nomalColor">#a9d587</color>
+
     <array name="sample_progress_gradient">
         <item>@color/sample_progress_gradient_start</item>
         <item>@color/sample_progress_gradient_end</item>

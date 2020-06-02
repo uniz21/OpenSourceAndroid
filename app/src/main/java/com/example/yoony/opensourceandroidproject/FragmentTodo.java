@@ -92,7 +92,7 @@ public class FragmentTodo extends Fragment {
                 btnLayout.setVisibility(View.INVISIBLE);
             }
         });
-        return inflater.inflate(R.layout.today_todo, container, false);
+        return view;
     }
     @Override
     public void onDestroy() {//종료시 백스택리스너 삭제
