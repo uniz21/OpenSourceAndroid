@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#a9d587</color>
+    <color name="colorPrimaryDark">#a9d587</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="sample_card_background">#FFFFFF</color>
+    <color name="sample_card_stroke">#0A000000</color>
+
+    <color name="sample_progress_background">#0A000000</color>
+    <color name="sample_progress_icon_background">#D32F2F</color>
+    <color name="sample_progress_primary">#EF5350</color>
+    <color name="sample_progress_secondary">#40EF5350</color>
+    <color name="sample_progress_gradient_start">#D32F2F</color>
+    <color name="sample_progress_gradient_end">#E57373</color>
+    <color name="sample_progress_text_color">#222222</color>
+
+    <color name="cursorColor">#a9d587</color>
+    <color name="nomalColor">#a9d587</color>
+
+    <array name="sample_progress_gradient">
+        <item>@color/sample_progress_gradient_start</item>
+        <item>@color/sample_progress_gradient_end</item>
+    </array>
+</resources>
+
