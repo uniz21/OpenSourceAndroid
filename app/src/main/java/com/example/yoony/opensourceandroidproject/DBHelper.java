@@ -96,11 +96,11 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.e("selectTodo",""+result);
         return result;
     }
-    public String sortTodo(){
+    public String sortTodo(int date){
         SQLiteDatabase db=getReadableDatabase();
         String result="";
 
-        Cursor cursor=db.rawQuery("select * from Todo order by isdone asc, job asc",null);
+        Cursor cursor=db.rawQuery("select * from Todo where date="+date+" order by isdone asc, job asc",null);
         while(cursor.moveToNext()){
             result+=cursor.getInt(0)+"|"+cursor.getString(1)+"|"+cursor.getInt(2)+"|"+cursor.getString(3)+"|"+cursor.getInt(4)+"\n";
         }

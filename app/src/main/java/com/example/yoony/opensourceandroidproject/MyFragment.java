@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -45,7 +46,7 @@ public class MyFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.listfragment,null);
         dbHelper=new DBHelper(view.getContext(),"QuestApp.db",null,1);
-        if(dbHelper.selectTodo()!="") {
+        if(dbHelper.sortTodo(getArguments().getInt(ARG_NO,0))!="") {
             createList();
         }
         myAdapter = new MyAdapter(getActivity(),a);
@@ -56,7 +57,7 @@ public class MyFragment extends Fragment {
     }
 
     public void createList(){
-        String temp[] = dbHelper.sortTodo().split("\n");
+        String temp[] = dbHelper.sortTodo(getArguments().getInt(ARG_NO,0)).split("\n");
         String data[][] = new String[5][temp.length];
         for (int i = 0; i < temp.length; i++) {
             for (int k = 0; k < 5; k++) {

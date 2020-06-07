@@ -19,6 +19,7 @@ public class FragmentTodo extends Fragment {
     int maxDayOfMonth=cal.getActualMaximum(Calendar.DAY_OF_MONTH);
     int thisDay=cal.get(Calendar.DAY_OF_MONTH);
     int thisMonth=cal.get(Calendar.MONTH)+1;
+    int date=(thisMonth*100)+thisDay;
 
     int fragmentPageNow=0;
 
@@ -57,7 +58,7 @@ public class FragmentTodo extends Fragment {
         if(savedInstanceState==null){//초기 프레그먼트 생성
             Log.d("enterIf","savedInstanceState=null");
             fragmentManager.beginTransaction()
-                    .add(R.id.fragment_container,MyFragment.getInstace(thisDay),FRAGMENT_TAG)
+                    .add(R.id.fragment_container,MyFragment.getInstace(date),FRAGMENT_TAG)
                     .addToBackStack(null)
                     .commit();
             fragmentPageNow=thisDay;
@@ -106,7 +107,7 @@ public class FragmentTodo extends Fragment {
     }
 
     private void callFragment(int fragment_no){//프래그먼트 전환
-        int i=(fragment_no%100);
+        int i=fragment_no;
         FragmentManager fragmentManager=getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container,MyFragment.getInstace(i)).addToBackStack(null).commit();
 
