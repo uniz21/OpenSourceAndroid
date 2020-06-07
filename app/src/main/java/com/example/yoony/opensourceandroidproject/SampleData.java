@@ -26,4 +26,13 @@ public class SampleData {
     public boolean isChecked() {
         return this.ischecked;
     }
+
+    public void setIschecked(boolean ischecked){
+        this.ischecked=ischecked;
+    }
+
+    public int getisDone(){
+        if(this.ischecked)return 1;
+        return 0;
+    }
 }

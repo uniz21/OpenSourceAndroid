@@ -65,17 +65,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("update Todo set isdone=" +isdone+" where _id="+id+" ;");
         db.close();
     }
-    public void updateId(int id){
-        SQLiteDatabase db = getWritableDatabase();
-
-        Cursor cursor = db.rawQuery("select * from Todo where _id="+id+";",null);
-        while(cursor.moveToNext()){//왜 moveToNext밖에선 에러가나는데 안에선 안나는지 이해 불가
-            db.execSQL("insert into todo values (null,'"+cursor.getString(1)+"',"+cursor.getInt(2)+",'"+cursor.getString(3)+"',"+cursor.getInt(4)+");");
-        }
-        deleteId(id);
-        db.close();
-    }
-
     public void deleteTodo(String job){
         SQLiteDatabase db=getWritableDatabase();
         db.execSQL("delete from Todo where job='"+job+"';");
@@ -104,6 +93,18 @@ public class DBHelper extends SQLiteOpenHelper {
         while(cursor.moveToNext()){
             result+=cursor.getInt(0)+"|"+cursor.getString(1)+"|"+cursor.getInt(2)+"|"+cursor.getString(3)+"|"+cursor.getInt(4)+"\n";
         }
+        Log.e("selectTodo",""+result);
+        return result;
+    }
+    public String sortTodo(){
+        SQLiteDatabase db=getReadableDatabase();
+        String result="";
+
+        Cursor cursor=db.rawQuery("select * from Todo order by isdone asc, job asc",null);
+        while(cursor.moveToNext()){
+            result+=cursor.getInt(0)+"|"+cursor.getString(1)+"|"+cursor.getInt(2)+"|"+cursor.getString(3)+"|"+cursor.getInt(4)+"\n";
+        }
+        Log.e("sortTodo",""+result);
         return result;
     }
     public String selectTodoByDate(int date){//날짜별 할일
