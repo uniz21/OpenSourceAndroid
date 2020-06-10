@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -35,6 +36,7 @@ public class FragmentTodo extends Fragment {
     Spinner monthSpinner;
     Button addBtn;
     ImageButton addListBtn;
+    HorizontalScrollView btnScroll;
 
     private static final String FRAGMENT_TAG = "FRAGMENT_TAG";
     private static final String KEY_NUMBER = "KEY_NUMBER";
@@ -76,6 +78,7 @@ public class FragmentTodo extends Fragment {
         }
 
         final LinearLayout tabWidgetLayout = (LinearLayout)view.findViewById(R.id.tabWidget);
+        btnScroll=view.findViewById(R.id.btnScroll);
 
         createBtn(view,tabWidgetLayout);
 
@@ -89,12 +92,14 @@ public class FragmentTodo extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.e("month",""+thisMonth);
                 thisMonth=position+1;
+                date=(thisMonth*100)+thisDay;
                 Log.e("newMonth",""+thisMonth);
                 Log.e("dayofmonth", ""+cal.getActualMaximum(cal.DAY_OF_MONTH));
                 cal.set(Calendar.YEAR,thisMonth-1,thisDay);
                 Log.e("dayofmonth", ""+cal.getActualMaximum(cal.DAY_OF_MONTH));
                 tabWidgetLayout.removeAllViews();
                 createBtn(view,tabWidgetLayout);
+                callFragment(date);
             }
 
             @Override
@@ -126,7 +131,6 @@ public class FragmentTodo extends Fragment {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    callFragment(v.getId());
                     btn.setFocusableInTouchMode(true);
                     btn.requestFocus();
                     Log.e("test","focus"+btn.isFocused());
@@ -136,6 +140,9 @@ public class FragmentTodo extends Fragment {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     if(hasFocus){
+                        callFragment(v.getId());
+                        Log.e("left","position"+btn.getLeft());
+                        btnScroll.scrollTo(btn.getLeft()-231,0);
                         v.setBackground(ContextCompat.getDrawable(view.getContext(),R.drawable.selecte_day_btn));
                         btn.setTextColor(Color.WHITE);
                     }else {
@@ -146,6 +153,10 @@ public class FragmentTodo extends Fragment {
             });
             tabWidgetLayout.addView(btn);
         }
+        Button todayBtn=tabWidgetLayout.findViewById(date);
+        todayBtn.setLeft(231*(date%100-1));
+        todayBtn.setFocusableInTouchMode(true);
+        todayBtn.requestFocus();
     }
     @Override
     public void onDestroy() {//종료시 백스택리스너 삭제
