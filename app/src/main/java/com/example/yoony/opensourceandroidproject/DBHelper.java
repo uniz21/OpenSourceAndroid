@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.example.yoony.opensourceandroidproject.db.DBConst;
+
 public class DBHelper extends SQLiteOpenHelper {
 
     //DBHelper 생성자로 관리할 DB이름과 버전 정보를 받음
@@ -22,6 +24,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE Todo(_id INTEGER PRIMARY KEY AUTOINCREMENT,job TEXT,date INTEGER,quest TEXT,isdone INTEGER DEFAULT '0' );");
         db.execSQL("CREATE TABLE User(nickname TEXT,point INTEGER);");
         db.execSQL("CREATE TABLE Shop(item TEXT,price INTEGER);");
+        Log.e("tableCreate","");
     }
 
     @Override
@@ -96,8 +99,23 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.e("selectTodo",""+result);
         return result;
     }
-    public String sortTodo(int date){
+    public String MainQuest(){
         SQLiteDatabase db=getReadableDatabase();
+        String result="";
+
+        Cursor cursor=db.rawQuery("select distinct "+DBConst.GoalTable.GOAL_TITLE+" from "+DBConst.GoalTable.TABLE_NAME,null);
+        while (cursor.moveToNext()){
+            result+=cursor.getString(0)+"\n";
+        }
+        Log.e("TodoQuest",""+result);
+        return result;
+    }
+    public String sortTodo(int date){
+
+        SQLiteDatabase db=getReadableDatabase();
+        try{
+            db.execSQL("CREATE TABLE Todo(_id INTEGER PRIMARY KEY AUTOINCREMENT,job TEXT,date INTEGER,quest TEXT,isdone INTEGER DEFAULT '0' );");
+        }catch(Exception e){}
         String result="";
 
         Cursor cursor=db.rawQuery("select * from Todo where date="+date+" order by isdone asc, job asc",null);

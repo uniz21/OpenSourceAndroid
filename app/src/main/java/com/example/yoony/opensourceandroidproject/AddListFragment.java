@@ -5,18 +5,23 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 public class AddListFragment extends Fragment {
     Button addBtn;
-    EditText equest,ejob;
+    Spinner equest;
+    EditText ejob;
     DatePicker edate;
     int prevPage=0;
     LinearLayout t,b;
@@ -39,14 +44,24 @@ public class AddListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view=inflater.inflate(R.layout.addlist_layout,null);
         addBtn=(Button)view.findViewById(R.id.addBtn);
-        equest=(EditText)view.findViewById(R.id.quest);
+        equest=(Spinner) view.findViewById(R.id.spinner1);
         edate=(DatePicker) view.findViewById(R.id.date);
         ejob=(EditText)view.findViewById(R.id.job);
+
+        DBHelper dbHelper=new DBHelper(view.getContext(),"QuestApp.db",null,1);
+
+        String[] questdata=dbHelper.MainQuest().split("\n");
+        Log.e("quest",questdata.toString());
+
+        ArrayAdapter adapter = new ArrayAdapter(view.getContext(),R.layout.spin,questdata);
+        adapter.setDropDownViewResource(R.layout.spin_dropdown);
+
+        equest.setAdapter(adapter);
+
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DBHelper dbHelper=new DBHelper(view.getContext(),"QuestApp.db",null,1);
-                String quest = equest.getText().toString();
+                String quest = equest.getSelectedItem().toString();
                 int date = ((edate.getMonth()+1)*100)+edate.getDayOfMonth();
                 String job = ejob.getText().toString();
 

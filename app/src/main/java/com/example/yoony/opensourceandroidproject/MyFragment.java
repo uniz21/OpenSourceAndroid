@@ -1,6 +1,7 @@
 package com.example.yoony.opensourceandroidproject;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;

@@ -10,7 +10,7 @@ import com.example.yoony.opensourceandroidproject.L;
 
 public class DbHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "Test.db";
+    public static final String DATABASE_NAME = "QuestApp.db";
 
     private static DbHelper mInstance;
     private Context context;
