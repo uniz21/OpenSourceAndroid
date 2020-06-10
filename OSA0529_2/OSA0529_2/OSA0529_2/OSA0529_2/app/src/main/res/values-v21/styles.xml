@@ -1,0 +1,17 @@
+<resources>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+    <style name="SampleCard">
+        <item name="android:background">@drawable/shape_sample_card_background</item>
+        <item name="android:paddingStart">@dimen/padding</item>
+        <item name="android:paddingEnd">@dimen/padding</item>
+        <item name="android:paddingTop">@dimen/padding_large</item>
+        <item name="android:paddingBottom">@dimen/padding_large</item>
+        <item name="android:layout_margin">@dimen/margin</item>
+    </style>
+
+</resources>
