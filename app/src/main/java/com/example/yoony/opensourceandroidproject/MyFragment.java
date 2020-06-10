@@ -41,7 +41,7 @@ public class MyFragment extends Fragment {
             String data[][] = new String[5][temp.length];
             for (int i = 0; i < temp.length; i++) {
                 Log.e("temp", temp[i]);
-                if(temp[i].split("\\|")[4].equals("1")){
+                if(temp[i].split("\\|")[4].equals("1")){      //sortTable
                     dbHelper.updateId(Integer.parseInt(temp[i].split("\\|")[0]));
                     Log.e("updateId",dbHelper.selectTodo());
                     temp=dbHelper.selectTodo().split("\n");
@@ -55,6 +55,7 @@ public class MyFragment extends Fragment {
         MyAdapter myAdapter = new MyAdapter(getActivity(),a);
 
         ListView listView = (ListView)view.findViewById(R.id.listView);
+        myAdapter.notifyDataSetChanged();
         listView.setAdapter(myAdapter);//어댑터 연결
 
         return view;

@@ -65,6 +65,9 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("update Todo set isdone=" +isdone+" where _id="+id+" ;");
         db.close();
     }
+    public void sortTodo(){
+        SQLiteDatabase db = getWritableDatabase();
+    }
     public void updateId(int id){
         SQLiteDatabase db = getWritableDatabase();
 
