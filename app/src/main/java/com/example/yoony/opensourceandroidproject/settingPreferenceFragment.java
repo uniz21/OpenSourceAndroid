@@ -2,12 +2,17 @@ package com.example.yoony.opensourceandroidproject;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.BaseAdapter;
+import android.widget.Toast;
+
+import java.util.Set;
 
 public class settingPreferenceFragment extends PreferenceFragment {
 
@@ -17,59 +22,69 @@ public class settingPreferenceFragment extends PreferenceFragment {
     ListPreference keywordSoundPreference;
     PreferenceScreen keywordScreen;
 
-
-
+    SharedPreferences pref;
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //별도의 화면 레이아웃파일(layout폴더)을 사용하지 않고
+        //설정 xml문서를 총해 화면이 자동 생성
+        //res폴더 안에 xml폴더 안에 .xml문서를 만들고
+        //<PregerenceScreen>클래스를 통해 화면 설계 시작..
+
         addPreferencesFromResource(R.xml.settings_preference);
-        soundPreference = (ListPreference)findPreference("sound_list");
-        keywordSoundPreference = (ListPreference)findPreference("keyword_sound_list");
-        keywordScreen = (PreferenceScreen)findPreference("keyword_screen");
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-        if(!prefs.getString("sound_list", "").equals("")){
-            soundPreference.setSummary(prefs.getString("sound_list", "카톡"));
-        }
+        //SharedPreference객체를 참조하여 설정상태에 대한 제어 가능..
+        pref =PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-        if(!prefs.getString("keyword_sound_list", "").equals("")){
-            keywordSoundPreference.setSummary(prefs.getString("keyword_sound_list", "카톡"));
-        }
+        //key 값이 "message"인 설정의 저장값 가져오기.
+        boolean isMessage= pref.getBoolean("message", false); //두번째 파라미터 : default값
+        Toast.makeText(getActivity(), "소리알림"+isMessage, Toast.LENGTH_SHORT).show();
+    }// onCreate() ..
 
-        if(prefs.getBoolean("keyword", false)){
-            keywordScreen.setSummary("사용");
-        }
+    @Override
+    public void onResume() {
+        super.onResume();
 
-        prefs.registerOnSharedPreferenceChangeListener(prefListener);
+        //설정값 변경리스너..등록
+        pref.registerOnSharedPreferenceChangeListener(listener);
+    }//onResume() ..
 
-    }// onCreate
+    @Override
+    public void onPause() {
+        super.onPause();
 
-    SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        pref.unregisterOnSharedPreferenceChangeListener(listener);
 
+    }
+
+    //설정값 변경리스너 객체 맴버변수
+    SharedPreferences.OnSharedPreferenceChangeListener listener= new SharedPreferences.OnSharedPreferenceChangeListener() {
+
+
+        @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if(key.equals("sound_list")){
-                soundPreference.setSummary(prefs.getString("sound_list", "카톡"));
+            if(key.equals("key_edit_name")){
+                EditTextPreference ep= (EditTextPreference) findPreference(key);
+                ep.setSummary(pref.getString(key, ""));
+                String nickname = pref.getString(key, "");
+                Toast.makeText(getActivity(), "닉네임 변경", Toast.LENGTH_SHORT).show();
             }
 
-            if(key.equals("keyword_sound_list")){
-                keywordSoundPreference.setSummary(prefs.getString("keyword_sound_list", "카톡"));
+            else if(key.equals("message")){
+                boolean b= pref.getBoolean("message", false);
+                Toast.makeText(getActivity(), "소리알림 : "+ b, Toast.LENGTH_SHORT).show();
+
+            }else if(key.equals("vibrate")){
+
+            }else if(key.equals("nickName")){
+                EditTextPreference ep= (EditTextPreference) findPreference(key);
+                ep.setSummary(pref.getString(key, ""));
+            }else if(key.equals("favor")){
+                Set<String> datas= pref.getStringSet(key, null);
+
             }
-
-            if(key.equals("keyword")){
-
-                if(prefs.getBoolean("keyword", false)){
-                    keywordScreen.setSummary("사용");
-
-                }else{
-                    keywordScreen.setSummary("사용안함");
-                }
-
-                //2뎁스 PreferenceScreen 내부에서 발생한 환경설정 내용을 2뎁스 PreferenceScreen에 적용하기 위한 소스
-                ((BaseAdapter)getPreferenceScreen().getRootAdapter()).notifyDataSetChanged();
-            }
-
         }
     };
-
 }

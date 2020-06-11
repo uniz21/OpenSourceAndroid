@@ -32,6 +32,101 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    public void  setShopItem(String item, int price){
+        SQLiteDatabase db = getWritableDatabase();
+
+        Log.e("sange", "어이템셋");
+        db.execSQL("insert into Shop values('"+item+"',"+price+");");
+        db.close();
+    }
+
+    public String  selectShopItem(){
+        SQLiteDatabase db=getReadableDatabase();
+        String result="";
+
+        Cursor cursor=db.rawQuery("select * from Shop",null);
+        while(cursor.moveToNext()){
+            result += cursor.getString(0)+"|"+cursor.getInt(1)+"\n";
+        }
+        Log.e("sangeun", result);
+        return result;
+    }
+
+    public int isEmptyShopItem(){
+        SQLiteDatabase db=getReadableDatabase();
+        String result="";
+
+        Cursor cursor=db.rawQuery("select * from Shop",null);
+        while(cursor.moveToNext()){
+            result += cursor.getString(0)+"|"+cursor.getInt(1)+"\n";
+            Log.e("sangeun", result);
+        }
+        if(result=="")
+            return 1;
+        else
+            return 0;
+
+    }
+
+    public void deleteShopItem(String item){
+        SQLiteDatabase db=getWritableDatabase();
+        db.execSQL("delete from Shop where item='"+item+"';");
+    }
+
+    public void  setUserNickname(String nickname, int point){
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.execSQL("insert into User values('"+nickname+"','"+point+"');");
+        db.close();
+    }
+
+    public void  updateUserNickname(String nickname){
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.execSQL("update User set nickname='"+nickname+"';");
+        db.close();
+    }
+
+    public void  plusUserPoint(int point){
+        SQLiteDatabase db = getWritableDatabase();
+        int result = selectUserpoint();
+        result += point;
+
+        db.execSQL("update User set point='"+result+"';");
+        db.close();
+    }
+
+    public void  minusUserPoint(int point){
+        SQLiteDatabase db = getWritableDatabase();
+        int result = selectUserpoint();
+        result -= point;
+
+        db.execSQL("update User set point='"+result+"';");
+        db.close();
+    }
+
+    public String selectUsername(){
+        SQLiteDatabase db = getReadableDatabase();
+        String result = "";
+
+        Cursor cursor=db.rawQuery("select nickname from User",null);
+        while(cursor.moveToNext()) {
+            result += cursor.getString(0);
+        }
+        return result;
+    }
+
+    public int selectUserpoint(){
+        SQLiteDatabase db = getReadableDatabase();
+        int result = 0;
+
+        Cursor cursor=db.rawQuery("select point from User",null);
+        while(cursor.moveToNext()) {
+            result = cursor.getInt(0);
+        }
+        return result;
+    }
+
     public void insert(String main,String sub){//퀘스트 추가
         SQLiteDatabase db = getWritableDatabase();
 
