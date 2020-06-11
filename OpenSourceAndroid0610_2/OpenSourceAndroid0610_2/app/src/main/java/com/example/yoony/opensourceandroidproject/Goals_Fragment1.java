@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -44,10 +45,7 @@ public class Goals_Fragment1 extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.goals_fragment1, container, false);
         View view2 = inflater.inflate(R.layout.goals_holder, container, false);
-        sleep = view.findViewById(R.id.sleep);
-        sleep2 = view.findViewById(R.id.sleep2);
-        sleep3 = view.findViewById(R.id.sleep3);
-        CheckBox check =view2.findViewById(R.id.checkBox);
+
         LinearLayout linear=view2.findViewById(R.id.linear);
 
         DBHelper dbHelper = new DBHelper(view.getContext(), "QuestApp.db", null, 1);
@@ -57,27 +55,32 @@ public class Goals_Fragment1 extends Fragment {
             Log.e("sub", "" + str[a]);
         }
 
-
-        if (check.isChecked()) {
-            count=count+1;
-        }
-
-        percent=(int)((double)str.length/(double)count)*100;
         ProgressBar progress = (ProgressBar) view.findViewById(R.id.progress) ;
         progress.setProgress(percent) ;
 
-            for (int i=0;i<str.length;i++) {
-                Goals_Sub goals_holder = new Goals_Sub(getContext());
-                LinearLayout sub_list= (LinearLayout)view.findViewById(R.id.sub_list);
-                sub_list.addView(goals_holder);
-                TextView tv = (TextView)view2.findViewById(R.id.holder_text);
-                 tv.setText(str[i]);
-            }
+        for (int i=0;i<str.length;i++) {
+            Goals_Sub goals_holder = new Goals_Sub(getContext());
+            LinearLayout sub_list= (LinearLayout)view.findViewById(R.id.sub_list);
+            sub_list.addView(goals_holder);
+            TextView tv=goals_holder.findViewById(R.id.holder_text);
+            CheckBox check=goals_holder.findViewById(R.id.checkBox);
+            check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if(b){
+                        count++;
+                    }else count--;
+                    percent=(int)(((double)count/(double)str.length)*100);
+                    Log.e("progress", "percent: "+percent );
+                    progress.setProgress(percent) ;
+                }
+            });
+            Log.e("str", "onCreateView: "+str[i] );
+            tv.setText(str[i]);
+        }
 
 
 
-            return view;
+        return view;
     }
-
-
 }
