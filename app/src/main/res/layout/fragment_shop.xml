@@ -4,36 +4,46 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="30dp"
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:orientation="horizontal"
-        android:layout_marginBottom="20dp">
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="아이템 추가" />
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/editText"
-            android:layout_width="40dp"
+            android:layout_width="110dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:hint="아이템명"
+            android:gravity="center"
+            android:fontFamily="@font/dxgulim"
             android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/editText2"
-            android:layout_width="40dp"
+            android:layout_width="110dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:hint="포인트"
+            android:gravity="center"
+            android:fontFamily="@font/dxgulim"
             android:inputType="number" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="+"
+            android:textFontWeight="6"
+            android:textSize="20dp"
+            android:background="@drawable/btn_color"  />
 
     </LinearLayout>
 

@@ -23,15 +23,16 @@
         <item>@color/sample_progress_gradient_end</item>
     </array>
 
-    <color name="index1">#ffafb0</color>
-    <color name="index2">#ffafd8</color>
-    <color name="index3">#aee4ff</color>
-    <color name="index4">#c4f4fe</color>
-    <color name="index5">#bee9b4</color>
-    <color name="index6">#caa6fe</color>
-    <color name="index7">#afffba</color>
-    <color name="index8">#e2ffaf</color>
-    <color name="index9">#f2cfa5</color>
-    <color name="index10">#ffafd8</color>
+    <color name="index0">#d6e2fc</color>
+    <color name="index1">#f4d9e3</color>
+    <color name="index2">#fdf2d8</color>
+    <color name="index3">#e5dee1</color>
+    <color name="index4">#e3eedc</color>
+    <color name="index5">#e5fef5</color>
+    <color name="index6">#fcedd7</color>
+    <color name="index7">#fbe7e5</color>
+    <color name="index8">#d2efe3</color>
+    <color name="index9">#e9f7e1</color>
+    <color name="index10">#f9e9e3</color>
 </resources>
 

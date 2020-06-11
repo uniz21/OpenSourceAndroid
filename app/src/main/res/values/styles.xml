@@ -15,6 +15,10 @@
         <item name="android:checkboxStyle">@style/customCheckboxFontStyle</item>
     </style>
 
+    <style name="ItemFont" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/dxgulim</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

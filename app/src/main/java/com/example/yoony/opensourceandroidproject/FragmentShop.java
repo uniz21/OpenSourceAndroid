@@ -59,8 +59,12 @@ public class FragmentShop extends Fragment {
                 builder.setPositiveButton("예",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                dbHelper.minusUserPoint(items.get(i).getCost());
-                                Toast.makeText(getActivity().getApplicationContext(),items.get(i).getCost()+"포인트를 지불하였습니다.",Toast.LENGTH_LONG).show();
+                                if(dbHelper.selectUserpoint()<items.get(i).getCost()){
+                                    Toast.makeText(getActivity().getApplicationContext(),(items.get(i).getCost()-dbHelper.selectUserpoint())+"포인트가 부족하여 구매할 수 없습니다.",Toast.LENGTH_LONG).show();
+                                }else {
+                                    dbHelper.minusUserPoint(items.get(i).getCost());
+                                    Toast.makeText(getActivity().getApplicationContext(),items.get(i).getCost()+"포인트를 지불하여 구매하였습니다.",Toast.LENGTH_LONG).show();
+                                }
                             }
                         });
                 builder.setNegativeButton("아니오",
@@ -103,7 +107,7 @@ public class FragmentShop extends Fragment {
             public void onClick(View view) {
                 String name = editText.getText().toString().trim();
                 int cost = Integer.parseInt(editText2.getText().toString().trim());
-                items.add(new SingerShopItem(name,cost, R.drawable.gift));
+                items.add(new SingerShopItem(name,cost, getResources().getIdentifier("index"+items.size(),"drawable", getContext().getPackageName())));
                 singerAdapter.notifyDataSetChanged();
                 dbHelper.setShopItem(name, cost);
                 //singerAdapter.addItem(new SingerShopItem(name, cost, R.drawable.gift));
@@ -123,7 +127,7 @@ public class FragmentShop extends Fragment {
             }
             Log.e("sangeun", data[0][i]);
             Log.e("sangeun", data[1][i]);
-            items.add(new SingerShopItem(data[0][i], Integer.parseInt(data[1][i]), R.drawable.gift));
+            items.add(new SingerShopItem(data[0][i], Integer.parseInt(data[1][i]), getResources().getIdentifier("index"+i,"drawable", getContext().getPackageName())));
         }
     }
 
