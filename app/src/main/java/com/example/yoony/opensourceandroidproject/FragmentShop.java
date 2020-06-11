@@ -2,10 +2,12 @@ package com.example.yoony.opensourceandroidproject;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +27,20 @@ public class FragmentShop extends Fragment {
     EditText editText2;
     Button button;
     SingerAdapter singerAdapter;
+    ArrayList<SingerShopItem> items = new ArrayList<SingerShopItem>();
+    DBHelper dbHelper;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_shop, container, false);
+
+        dbHelper = new DBHelper(view.getContext(), "QuestApp.db", null, 1);
+
+        if(dbHelper.isEmptyShopItem()==0){
+            createShopList();
+        }
 
         gridView = (GridView)view.findViewById(R.id.gridView);
         editText = (EditText)view.findViewById(R.id.editText);
@@ -37,9 +48,6 @@ public class FragmentShop extends Fragment {
         button = (Button)view.findViewById(R.id.button);
 
         singerAdapter = new SingerAdapter();
-        singerAdapter.addItem(new SingerShopItem("하루쉬기","50", R.drawable.goals));
-        singerAdapter.addItem(new SingerShopItem("치팅데이","80", R.drawable.goals));
-        singerAdapter.addItem(new SingerShopItem("자유","10", R.drawable.goals));
 
         gridView.setAdapter(singerAdapter);
 
@@ -51,7 +59,8 @@ public class FragmentShop extends Fragment {
                 builder.setPositiveButton("예",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(getActivity().getApplicationContext(),"예를 선택했습니다.",Toast.LENGTH_LONG).show();
+                                dbHelper.minusUserPoint(items.get(i).getCost());
+                                Toast.makeText(getActivity().getApplicationContext(),items.get(i).getCost()+"포인트를 지불하였습니다.",Toast.LENGTH_LONG).show();
                             }
                         });
                 builder.setNegativeButton("아니오",
@@ -61,9 +70,29 @@ public class FragmentShop extends Fragment {
                             }
                         });
                 builder.show();
+            }
+        });
 
-                //Toast.makeText(getActivity().getApplicationContext(),"아이템명 : "+ singerAdapter.getItem(i).getName().toString() + "   POINT : "+singerAdapter.getItem(i).getCost().toString(),Toast.LENGTH_LONG).show();
-
+        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("삭제하시겠습니까?");
+                builder.setPositiveButton("예",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dbHelper.deleteShopItem(items.get(i).getName());
+                                Toast.makeText(getActivity().getApplicationContext(),items.get(i).getName()+"아이템을 삭제하였습니다.",Toast.LENGTH_LONG).show();
+                            }
+                        });
+                builder.setNegativeButton("아니오",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(getActivity().getApplicationContext(),"아니오를 선택했습니다.",Toast.LENGTH_LONG).show();
+                            }
+                        });
+                builder.show();
+                return false;
             }
         });
 
@@ -71,16 +100,31 @@ public class FragmentShop extends Fragment {
             @Override
             public void onClick(View view) {
                 String name = editText.getText().toString().trim();
-                String cost = editText2.getText().toString().trim();
-                singerAdapter.addItem(new SingerShopItem(name,cost, R.drawable.goals));
+                int cost = Integer.parseInt(editText2.getText().toString().trim());
+                singerAdapter.addItem(new SingerShopItem(name,cost, R.drawable.gift));
+                dbHelper.setShopItem(name, cost);
+                //singerAdapter.addItem(new SingerShopItem(name, cost, R.drawable.gift));
             }
         });
 
         return view;
     }
 
+    public void createShopList(){
+        items.clear();
+        String temp[] = dbHelper.selectShopItem().split("\n");
+        String data[][] = new String[2][temp.length];
+        for (int i = 0; i < temp.length; i++) {
+            for (int k = 0; k < 2; k++) {
+                data[k][i] = temp[i].split("\\|")[k];
+            }
+            Log.e("sangeun", data[0][i]);
+            Log.e("sangeun", data[1][i]);
+            items.add(new SingerShopItem(data[0][i], Integer.parseInt(data[1][i]), R.drawable.gift));
+        }
+    }
+
     class SingerAdapter extends BaseAdapter {
-        ArrayList<SingerShopItem> items = new ArrayList<SingerShopItem>();
         @Override
         public int getCount() {
             return items.size();

@@ -35,7 +35,7 @@ public class SingerViewer extends LinearLayout {
 
     public void setItem(SingerShopItem singerItem){
         textView.setText(singerItem.getName());
-        textView2.setText(singerItem.getCost());
+        textView2.setText(String.valueOf(singerItem.getCost()));
         imageView.setImageResource(singerItem.getImage());
     }
 }
