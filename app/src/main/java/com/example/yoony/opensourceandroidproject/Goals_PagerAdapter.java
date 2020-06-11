@@ -1,35 +1,40 @@
 package com.example.yoony.opensourceandroidproject;
 
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+
+import java.util.List;
 
 public class Goals_PagerAdapter extends FragmentPagerAdapter {
     int mNumOfTabs; //tab의 갯수
+    String[] str;
 
-    public Goals_PagerAdapter(FragmentManager fm, int numOfTabs) {
+    public Goals_PagerAdapter(FragmentManager fm, int numOfTabs,String[] str) {
         super(fm);
         this.mNumOfTabs = numOfTabs;
+        this.str=str;
     }
 
     @Override
     public Fragment getItem(int position) {
-
-        switch (position) {
-            case 0:
-                Goals_Fragment1 tab1 = new Goals_Fragment1();
-                return tab1;
-            case 1:
-                Goals_Fragment2 tab2 = new Goals_Fragment2();
-                return tab2;
-            case 2:
-                Goals_Fragment3 tab3 = new Goals_Fragment3();
-                return tab3;
-            default:
-                return null;
+        if(position==(mNumOfTabs-1)){
+            Log.e("position",""+position);
+            Goals_Fragment1 tab1 = new Goals_Fragment1();
+            tab1.getInstance(str[position-1]);
+            return tab1;
+        }else{
+            Log.e("position",""+position);
+            Goals_Fragment1 tab1 = new Goals_Fragment1();
+            tab1.getInstance(str[position]);
+            return tab1;
         }
-        //return null;
     }
+
 
     @Override
     public int getCount() {

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+  >
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
@@ -12,8 +15,9 @@
 
     <TextView
         style="@style/Text.Title"
-        android:layout_width="@dimen/content_width"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_marginStart="@dimen/margin"
         android:layout_marginTop="@dimen/margin"
         android:layout_marginEnd="@dimen/margin"
@@ -25,70 +29,42 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.akexorcist.roundcornerprogressbar.TextRoundCornerProgressBar
-            android:id="@+id/progressBarTextCustom"
-            style="@style/SampleProgress"
-            app:rcAnimationEnable="true"
-            app:rcAnimationSpeedScale = " 1 "
-            app:rcBackgroundColor="@color/sample_progress_background"
-            app:rcBackgroundPadding="4dp"
-            app:rcMax="255"
-            app:rcProgress="80"
-            app:rcProgressColor="@color/sample_progress_primary"
-            app:rcRadius="10dp"
-            app:rcTextInsideGravity="start"
-            app:rcTextOutsideGravity="start"
-            app:rcTextPositionPriority="inside"
-            app:rcTextProgress="20"
-            app:rcTextProgressColor="@color/sample_progress_text_color" />
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        style="@style/SampleCard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            style="@style/Text.Title"
-            android:layout_width="@dimen/content_width"
+        <ProgressBar
+            android:id="@+id/progress"
+            android:progressTint="#ffd500"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="310dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginTop="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"
-            android:text="서브목표 공간 1" />
+            android:progress="25" />
     </LinearLayout>
     <LinearLayout
-        style="@style/SampleCard"
-        android:layout_width="wrap_content"
+        android:id="@+id/sub_list"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            style="@style/Text.Title"
-            android:layout_width="@dimen/content_width"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginTop="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"
-            android:text="서브목표 공간 2" />
-    </LinearLayout>
-    <LinearLayout
-        style="@style/SampleCard"
-        android:layout_width="wrap_content"
+        android:orientation="vertical"></LinearLayout>
+    <TextView
+       android:id="@+id/sleep"
+        android:layout_width="@dimen/content_width"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            style="@style/Text.Title"
-            android:layout_width="@dimen/content_width"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginTop="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"
-            android:text="서브목표 공간 3" />
-    </LinearLayout>
-
+        android:layout_marginStart="@dimen/margin"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginEnd="@dimen/margin"
+         />
+    <TextView
+        android:id="@+id/sleep2"
+        android:layout_width="@dimen/content_width"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginEnd="@dimen/margin"
+        />
+    <TextView
+        android:id="@+id/sleep3"
+        android:layout_width="@dimen/content_width"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginEnd="@dimen/margin"
+        />
 </LinearLayout>
+</ScrollView>

@@ -29,7 +29,6 @@ public class FragmentMain extends Fragment {
     RecyclerView recyclerView;
     RecyclerAdapter recyclerAdapter;
     ImageButton btnAdd;
-    Button btn;
 
     @Nullable
     @Override

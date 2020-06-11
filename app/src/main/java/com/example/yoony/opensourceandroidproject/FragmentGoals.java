@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,6 @@ import android.view.ViewGroup;
 public class FragmentGoals extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Nullable
@@ -24,17 +23,25 @@ public class FragmentGoals extends Fragment {
         View view= inflater.inflate(R.layout.fragment_goals, container, false);
         super.onCreate(savedInstanceState);
 
+        DBHelper dbHelper=new DBHelper(view.getContext(),"QuestApp.db",null,1);
+        String[] str=dbHelper.MainQuest().split("\n");
+        String[] _id=dbHelper.addedByUser().split("\n");
 
         //TabLayout
         TabLayout tabs = (TabLayout) view.findViewById(R.id.tabs);
-        tabs.addTab(tabs.newTab().setText("물마시기"));
-        tabs.addTab(tabs.newTab().setText("수영하기"));
-        tabs.addTab(tabs.newTab().setText("6시기상"));
+        for(int a=0;a<str.length;a++){
+            Log.e("", "added: "+str[a] );
+            tabs.addTab(tabs.newTab().setText(str[a]));
+        }
+//        tabs.addTab(tabs.newTab().setText(str[0]));
+//        tabs.addTab(tabs.newTab().setText(str[1]));
+//        tabs.addTab(tabs.newTab().setText(str[2]));
         tabs.setTabGravity(tabs.GRAVITY_FILL);
 
         //어답터설정
         final ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpager);
-        final Goals_PagerAdapter myPagerAdapter = new Goals_PagerAdapter(getChildFragmentManager(), 3);
+        Log.e("str.length",""+str.length);
+        final Goals_PagerAdapter myPagerAdapter = new Goals_PagerAdapter(getChildFragmentManager(), str.length+1,_id);
         viewPager.setAdapter(myPagerAdapter);
 
         //탭메뉴를 클릭하면 해당 프래그먼트로 변경-싱크화

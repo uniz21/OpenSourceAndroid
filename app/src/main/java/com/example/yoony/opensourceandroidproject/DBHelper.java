@@ -200,28 +200,53 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.e("selectTodo",""+result);
         return result;
     }
-        public String MainQuest(){
-            SQLiteDatabase db=getReadableDatabase();
-            String result="";
 
-            Cursor cursor=db.rawQuery("select distinct "+DBConst.GoalTable.GOAL_TITLE+" from "+DBConst.GoalTable.TABLE_NAME,null);
-            while (cursor.moveToNext()){
-                result+=cursor.getString(0)+"\n";
-            }
-            Log.e("TodoQuest",""+result);
-            return result;
-    }
-        public String SubQuest(){
-            SQLiteDatabase db=getReadableDatabase();
-            String result="";
 
-            Cursor cursor=db.rawQuery("select distinct "+DBConst.SubGoalTable.SUBTITLE+" from "+DBConst.SubGoalTable.TABLE_NAME,null);
-            while (cursor.moveToNext()){
-                result+=cursor.getString(0)+"\n";
-            }
-            Log.e("TodoQuest",""+result);
-            return result;
+    public String MainQuest(){
+        SQLiteDatabase db=getReadableDatabase();
+        String result="";
+
+        Cursor cursor=db.rawQuery("select distinct "+DBConst.GoalTable.GOAL_TITLE+" from "+DBConst.GoalTable.TABLE_NAME,null);
+        while (cursor.moveToNext()){
+            result+=cursor.getString(0)+"\n";
+        }
+        Log.e("TodoQuest",""+result);
+        return result;
     }
+    public String SubQuest(){
+        SQLiteDatabase db=getReadableDatabase();
+        String result="";
+
+        Cursor cursor=db.rawQuery("select distinct "+DBConst.SubGoalTable.SUBTITLE+" from "+DBConst.SubGoalTable.TABLE_NAME,null);
+        while (cursor.moveToNext()){
+            result+=cursor.getString(0)+"\n";
+        }
+        Log.e("TodoQuest",""+result);
+        return result;
+    }
+
+    public String addedByUser(){
+        SQLiteDatabase db = getReadableDatabase();
+        String result="";
+        Cursor cursor=db.rawQuery("select distinct "+DBConst.GoalTable._ID+" from "+DBConst.GoalTable.TABLE_NAME,null);
+        while(cursor.moveToNext()){
+            result+=""+cursor.getLong(0)+"\n";
+        }
+        Log.e("아앙ㄴㄹ나ㅜ", "addedByUser: "+result );
+        return result;
+    }
+
+    public String SubQuest(Long main){
+        SQLiteDatabase db =getReadableDatabase();
+        String result ="";
+        Cursor cursor=db.rawQuery("select distinct "+DBConst.SubGoalTable.SUBTITLE+" from "+DBConst.SubGoalTable.TABLE_NAME+" where "+DBConst.SubGoalTable.ADDEDBYUSER+"='"+main+"'",null);
+        while (cursor.moveToNext()){
+            result+=cursor.getString(0)+"\n";
+        }
+        Log.e("SubQuest","sub:"+result);
+        return result;
+    }
+
     public String sortTodo(int date){
 
         SQLiteDatabase db=getReadableDatabase();

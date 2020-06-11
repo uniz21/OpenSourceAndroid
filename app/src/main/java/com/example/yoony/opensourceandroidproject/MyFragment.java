@@ -79,11 +79,7 @@ public class MyFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        TextView textView = (TextView)view.findViewById(R.id.text);
         int no = getArguments().getInt(ARG_NO,0);
-        String text = "" + no + "번째 프래그먼트";
-        Log.d("MyFragment","onCreate"+text);
-        textView.setText(text);//프레그먼트 전환 구분
     }
     public class MyAdapter extends BaseAdapter {
 
