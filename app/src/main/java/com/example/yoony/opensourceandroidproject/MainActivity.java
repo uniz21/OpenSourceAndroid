@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -61,6 +62,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 final DBHelper dbHelper = new DBHelper(getApplicationContext(), "QuestApp.db", null, 1);
+
+                try{
+                    dbHelper.selectUsername();
+                }catch (Exception e){
+                    dbHelper.setUserNickname("user",0);
+                }
 
                 //setContentView(R.layout.nav_header_main);
                 EditText nickname = (EditText) findViewById(R.id.user_nickname);
@@ -184,9 +191,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             transaction.commit();
         } else if (id == R.id.nav_setting) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            FragmentSetting fragmentsetting = new FragmentSetting();
-            transaction.replace(R.id.main_fragment, fragmentsetting);
+            FragmentSetting fragmentSetting = new FragmentSetting();
+            transaction.replace(R.id.main_fragment, fragmentSetting);
             transaction.commit();
+//            settingPreferenceFragment setting = new settingPreferenceFragment();
+//            getFragmentManager().beginTransaction().replace(R.id.main_fragment, setting).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

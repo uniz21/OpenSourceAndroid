@@ -54,6 +54,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public int isEmptyShopItem(){
         SQLiteDatabase db=getReadableDatabase();
+        try{
+            db.execSQL("CREATE TABLE Shop(item TEXT,price INTEGER);");
+        }catch(Exception e){}
         String result="";
 
         Cursor cursor=db.rawQuery("select * from Shop",null);
@@ -75,8 +78,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void  setUserNickname(String nickname, int point){
         SQLiteDatabase db = getWritableDatabase();
+        try{
+            db.execSQL("CREATE TABLE User(nickname TEXT,point INTEGER);");
+        }catch(Exception e){}
 
-        db.execSQL("insert into User values('"+nickname+"','"+point+"');");
+        db.execSQL("insert into User values('"+nickname+"',"+point+");");
         db.close();
     }
 

@@ -59,7 +59,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="done" />
+            android:text="done"
+            android:background="@drawable/btn_color"/>
 
     </LinearLayout>
 </LinearLayout>

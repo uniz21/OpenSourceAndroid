@@ -29,7 +29,8 @@
         android:text="닉네임"
         android:background="@android:color/transparent"
         android:layout_gravity="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:fontFamily="@font/dxgulim"/>
 
     <TextView
         android:id="@+id/user_point"

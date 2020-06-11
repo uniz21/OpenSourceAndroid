@@ -3,7 +3,7 @@
     <!-- default-->
     <item android:state_focused="false" android:state_pressed="false">
         <shape>
-            <solid android:color="#a9d587" />
+            <solid android:color="#d2d2d2" />
             <corners android:radius="1000dp" />
             <padding android:bottom="15dp" android:left="15dp"
                 android:right="15dp" android:top="15dp"  />
@@ -13,7 +13,7 @@
     <!-- click -->
     <item android:state_focused="false" android:state_pressed="true">
         <shape>
-            <solid android:color="#8fbb6f" />
+            <solid android:color="#ababab" />
             <corners android:radius="1000dp" />
             <padding android:bottom="15dp" android:left="15dp"
                 android:right="15dp" android:top="15dp" />

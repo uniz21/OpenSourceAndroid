@@ -83,6 +83,8 @@ public class FragmentShop extends Fragment {
                             public void onClick(DialogInterface dialog, int which) {
                                 dbHelper.deleteShopItem(items.get(i).getName());
                                 Toast.makeText(getActivity().getApplicationContext(),items.get(i).getName()+"아이템을 삭제하였습니다.",Toast.LENGTH_LONG).show();
+                                items.remove(i);
+                                singerAdapter.notifyDataSetChanged();
                             }
                         });
                 builder.setNegativeButton("아니오",
@@ -101,7 +103,8 @@ public class FragmentShop extends Fragment {
             public void onClick(View view) {
                 String name = editText.getText().toString().trim();
                 int cost = Integer.parseInt(editText2.getText().toString().trim());
-                singerAdapter.addItem(new SingerShopItem(name,cost, R.drawable.gift));
+                items.add(new SingerShopItem(name,cost, R.drawable.gift));
+                singerAdapter.notifyDataSetChanged();
                 dbHelper.setShopItem(name, cost);
                 //singerAdapter.addItem(new SingerShopItem(name, cost, R.drawable.gift));
             }
