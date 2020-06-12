@@ -17,6 +17,7 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -124,10 +125,13 @@ public class MyFragment extends Fragment {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
+                        dbHelper.plusUserPoint(10);
+                        Toast.makeText(getActivity().getApplicationContext(),"10포인트가 적립되었습니다.",Toast.LENGTH_LONG).show();
                         DBHelper dbHelper = new DBHelper(view.getContext(), "QuestApp.db", null, 1);
                         dbHelper.updateisDone(sample.get(position).getId(), 1);
                         sample.get(position).setIschecked(true);
                     } else {
+                        dbHelper.minusUserPoint(10);
                         DBHelper dbHelper = new DBHelper(view.getContext(), "QuestApp.db", null, 1);
                         dbHelper.updateisDone(sample.get(position).getId(), 0);
                         sample.get(position).setIschecked(false);

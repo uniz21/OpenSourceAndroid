@@ -24,6 +24,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE Todo(_id INTEGER PRIMARY KEY AUTOINCREMENT,job TEXT,date INTEGER,quest TEXT,isdone INTEGER DEFAULT '0' );");
         db.execSQL("CREATE TABLE User(nickname TEXT,point INTEGER);");
         db.execSQL("CREATE TABLE Shop(item TEXT,price INTEGER);");
+        db.execSQL("CREATE TABLE Rate(rate_main TEXT,rate INTEGER);");
         Log.e("tableCreate","");
     }
 
@@ -213,6 +214,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.e("TodoQuest",""+result);
         return result;
     }
+
     public String SubQuest(){
         SQLiteDatabase db=getReadableDatabase();
         String result="";
@@ -245,6 +247,47 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         Log.e("SubQuest","sub:"+result);
         return result;
+    }
+
+    public void setRate(String rate_main, int rate){
+        SQLiteDatabase db = getWritableDatabase();
+        if(isMainQuestinRate(rate_main)==false){
+            db.execSQL("insert into Rate values('"+rate_main+"',"+rate+");");
+        }
+        db.close();
+    }
+
+    public void updateRate(String rate_main, int rate){
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.execSQL("update Rate set rate="+rate+" where rate_main='"+rate_main+"';");
+        db.close();
+    }
+
+    public int selectRate(String rate_main){
+        SQLiteDatabase db = getReadableDatabase();
+        int result = 0;
+        Cursor cursor = db.rawQuery("select rate from Rate where rate_main='"+rate_main+"'",null);
+        while (cursor.moveToNext()){
+            result += cursor.getInt(0);
+        }
+        return result;
+    }
+
+    public boolean isMainQuestinRate(String rate_main){
+        SQLiteDatabase db = getReadableDatabase();
+        try{
+            db.execSQL("CREATE TABLE Rate(rate_main TEXT, rate INTEGER);");
+        }catch(Exception e){}
+        String result = "";
+        Cursor cursor = db.rawQuery("select rate_main from Rate where rate_main='"+rate_main+"'",null);
+        while (cursor.moveToNext()){
+            result += cursor.getString(0)+"\n";
+        }
+        if(result=="")
+            return false;
+        else
+            return true;
     }
 
     public String sortTodo(int date){

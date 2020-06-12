@@ -4,7 +4,9 @@ import android.content.Context;
 
 import com.example.yoony.opensourceandroidproject.L;
 import com.example.yoony.opensourceandroidproject.db.DbHelper;
+import com.example.yoony.opensourceandroidproject.db.dao.GoalDAO;
 import com.example.yoony.opensourceandroidproject.db.dao.GoalSubDAO;
+import com.example.yoony.opensourceandroidproject.db.model.Goal;
 import com.example.yoony.opensourceandroidproject.db.model.GoalSub;
 
 import java.util.List;
@@ -33,6 +35,25 @@ public class GoalSubDAOFactory {
             }
         }
         return pass;
+    }
+
+    public static boolean updateGoalSub(Context context, GoalSub goalSub) throws Exception {
+        //db에 최종목표를 수정하는 함수이다
+        boolean result = false;
+        DbHelper dbHelper = null;
+        try {
+            dbHelper = DbHelper.getInstance(context);
+            GoalSubDAO goalSubDAO = new GoalSubDAO(context, dbHelper.getWritableDatabase());
+            result = goalSubDAO.updateGoal(goalSub);
+            L.e("::::delete success : " + result);
+        } catch (Exception e) {
+            L.e(":::::GoalDAOFactory updateGoal Exception");
+        } finally {
+            if (dbHelper != null) {
+                dbHelper.close();
+            }
+        }
+        return result;
     }
 
     public static boolean removeGoalSub(Context context, GoalSub goalSub) throws Exception {

@@ -5,13 +5,14 @@
     android:orientation="vertical">
 
     <TextView
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="22dp"
-        android:textColor="#000"
         android:layout_marginLeft="15dp"
-        android:theme="@style/EditTheme"/>
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:gravity="center"
+        android:textColor="#000"
+        android:textSize="20dp"
+        android:theme="@style/EditTheme" />
 </RelativeLayout>

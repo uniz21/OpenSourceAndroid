@@ -24,6 +24,7 @@ import java.util.List;
 
 public class Goals_Fragment1 extends Fragment {
     Long main;
+    String main_;
     TextView sub_goal_1;
     LinearLayout sub_list;
     TextView sleep;
@@ -36,8 +37,9 @@ public class Goals_Fragment1 extends Fragment {
         // Required empty public constructor
     }
 
-    public void getInstance(String str) {
+    public void getInstance(String str, String main) {
         this.main = Long.parseLong(str);
+        this.main_ = main;
     }
 
     @Override
@@ -51,12 +53,16 @@ public class Goals_Fragment1 extends Fragment {
         DBHelper dbHelper = new DBHelper(view.getContext(), "QuestApp.db", null, 1);
         String[] str = dbHelper.SubQuest(main).split("\n");
 
+
         for (int a = 0; a < str.length; a++) {
             Log.e("sub", "" + str[a]);
         }
 
+        TextView textView = (TextView)view.findViewById(R.id.percent_num);
         ProgressBar progress = (ProgressBar) view.findViewById(R.id.progress) ;
-        progress.setProgress(percent) ;
+        progress.setProgress(dbHelper.selectRate(main_));
+        textView.setText(String.valueOf(dbHelper.selectRate(main_))+"%");
+
 
         for (int i=0;i<str.length;i++) {
             Goals_Sub goals_holder = new Goals_Sub(getContext());
@@ -64,6 +70,12 @@ public class Goals_Fragment1 extends Fragment {
             sub_list.addView(goals_holder);
             TextView tv=goals_holder.findViewById(R.id.holder_text);
             CheckBox check=goals_holder.findViewById(R.id.checkBox);
+            if(dbHelper.selectRate(main_)>=(int)(((double)(i+1)/(double)str.length)*100)){
+                check.setChecked(true);
+                count++;
+            }
+
+            int finalI = i;
             check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -71,8 +83,10 @@ public class Goals_Fragment1 extends Fragment {
                         count++;
                     } else count--;
                     percent=(int)(((double)count/(double)str.length)*100);
+                    dbHelper.updateRate(main_,percent);
                     Log.e("progress", "percent: "+percent );
-                    progress.setProgress(percent) ;
+                    progress.setProgress(dbHelper.selectRate(main_));
+                    textView.setText(String.valueOf(percent)+"%");
                 }
             });
             Log.e("str", "onCreateView: "+str[i] );

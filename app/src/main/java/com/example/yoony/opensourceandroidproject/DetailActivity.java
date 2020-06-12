@@ -1,5 +1,6 @@
 package com.example.yoony.opensourceandroidproject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -18,6 +20,7 @@ import com.example.yoony.opensourceandroidproject.db.factory.GoalDAOFactory;
 import com.example.yoony.opensourceandroidproject.db.factory.GoalSubDAOFactory;
 import com.example.yoony.opensourceandroidproject.db.model.Goal;
 import com.example.yoony.opensourceandroidproject.db.model.GoalSub;
+import com.tedpark.tedonactivityresult.rx2.TedRxOnActivityResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,7 @@ import java.util.List;
 public class DetailActivity extends AppCompatActivity {
     LinearLayout LL;
     TextView tvGoal;
+    Button btnUpdate;
     private ArrayList<SubItemView> mSubItemViewList = new ArrayList<>();
     private List<GoalSub> mCurrentGoalSubList;
     private Goal mCurrentGoalItem;
@@ -40,14 +44,32 @@ public class DetailActivity extends AppCompatActivity {
         if (mCurrentGoalItem == null) return;
 
 
-
-
         tvGoal = findViewById(R.id.tvGoal);
+        btnUpdate = findViewById(R.id.btnRe);
         LL = findViewById(R.id.LL);
 
         onGoalSubDataLoad(mCurrentGoalItem.getGoalTitle(), String.valueOf(mCurrentGoalItem.getIndexNumber()));
 
         findViewById(R.id.btnDone).setOnClickListener(view -> finish());
+
+        btnUpdate.setOnClickListener(view -> {
+            //수정화면으로 전환...
+
+            Intent updateIntent = new Intent(this, DetailActivityUpdate.class);
+            updateIntent.putExtra("EXTRA_GOAL", mCurrentGoalItem);
+            TedRxOnActivityResult.with(DetailActivity.this)
+                    .startActivityForResult(updateIntent)
+                    .subscribe(activityResult -> {
+                                if (activityResult.getResultCode() == Activity.RESULT_OK) {
+                                    //수정 화면에서 수정완료 버튼을 누를시. 해당 화면은 finish 처리한다.
+                                    setResult(RESULT_OK);
+                                    finish();
+                                }
+                            }, error -> {
+                                //에러발생시. 예외처리
+                            }
+                    );
+        });
 
     }
 

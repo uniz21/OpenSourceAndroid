@@ -35,6 +35,45 @@ public class GoalDAOFactory {
         return pass;
     }
 
+    public static boolean updateGoal(Context context, Goal goal) throws Exception {
+        //db에 최종목표를 수정하는 함수이다
+        boolean result = false;
+        DbHelper dbHelper = null;
+        try {
+            dbHelper = DbHelper.getInstance(context);
+            GoalDAO goalDAO = new GoalDAO(context, dbHelper.getWritableDatabase());
+            result = goalDAO.updateGoal(goal);
+            L.e("::::delete success : " + result);
+        } catch (Exception e) {
+            L.e(":::::GoalDAOFactory updateGoal Exception");
+        } finally {
+            if (dbHelper != null) {
+                dbHelper.close();
+            }
+        }
+        return result;
+    }
+
+
+    public static boolean removeGoal(Context context, Goal goal) throws Exception {
+        //db에 최종목표를 추가 시키는 함수이다.
+        boolean result = false;
+        DbHelper dbHelper = null;
+        try {
+            dbHelper = DbHelper.getInstance(context);
+            GoalDAO goalDAO = new GoalDAO(context, dbHelper.getWritableDatabase());
+            result = goalDAO.removeGoal(goal);
+            L.e("::::delete success : " + result);
+        } catch (Exception e) {
+            L.e(":::::GoalDAOFactory removeGoal Exception");
+        } finally {
+            if (dbHelper != null) {
+                dbHelper.close();
+            }
+        }
+        return result;
+    }
+
     public static List<Goal> getGoalList(Context context) throws Exception {
         //db에 있는 최종 목표 리스트를 호출하는 함수이다.
         List<Goal> list = null;

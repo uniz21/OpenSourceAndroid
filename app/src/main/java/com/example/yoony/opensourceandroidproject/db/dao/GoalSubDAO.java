@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.yoony.opensourceandroidproject.L;
 import com.example.yoony.opensourceandroidproject.db.DBConst;
+import com.example.yoony.opensourceandroidproject.db.model.Goal;
 import com.example.yoony.opensourceandroidproject.db.model.GoalSub;
 
 import java.util.ArrayList;
@@ -33,6 +34,24 @@ public class GoalSubDAO {
             }
         } catch (Exception e) {
             L.e(":::::add Exception : " + e.getMessage());
+        }
+        return pass;
+    }
+
+    public boolean updateGoal(GoalSub info) {
+        //최종목표를 삭제하는 함수이다.
+        boolean pass = false;
+        try {
+            ContentValues reportValue = new ContentValues();
+            reportValue.put(DBConst.SubGoalTable.SUBTITLE, info.getSubTitle());
+            String whereClause = "_id=?";
+            String[] whereArgs = new String[]{
+                    String.valueOf(info.getIndexNumber())
+            };
+            mDatabase.update(DBConst.SubGoalTable.TABLE_NAME, reportValue, whereClause, whereArgs);
+            return true;
+        } catch (Exception e) {
+            L.e(":::::update Exception : " + e.getMessage());
         }
         return pass;
     }

@@ -2,13 +2,13 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     >
 
-    <PreferenceCategory android:title="설정">
+<!--    <PreferenceCategory android:title="설정">-->
 
-        <SwitchPreference
-            android:key="message"
-            android:title="알림 켜기"/>
+<!--        <SwitchPreference-->
+<!--            android:key="message"-->
+<!--            android:title="알림 켜기"/>-->
 
-    </PreferenceCategory>
+<!--    </PreferenceCategory>-->
 
     <PreferenceCategory android:title="라이선스 정보">
 

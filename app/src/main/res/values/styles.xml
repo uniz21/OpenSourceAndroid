@@ -90,5 +90,13 @@
         <item name="android:paddingBottom">@dimen/padding_large</item>
         <item name="android:layout_margin">@dimen/margin</item>
     </style>
+    <style name="SampleCard2">
+        <item name="android:background">@drawable/shape_sample_card_background_2</item>
+        <item name="android:paddingStart">@dimen/padding</item>
+        <item name="android:paddingEnd">@dimen/padding</item>
+        <item name="android:paddingTop">@dimen/padding_large</item>
+        <item name="android:paddingBottom">@dimen/padding_large</item>
+        <item name="android:layout_margin">@dimen/margin_large</item>
+    </style>
 
 </resources>

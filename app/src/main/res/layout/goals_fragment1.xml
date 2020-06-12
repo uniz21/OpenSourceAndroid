@@ -24,18 +24,31 @@
         android:text="@string/title_text_round_corner_progress_bar" />
 
     <LinearLayout
-        style="@style/SampleCard"
-        android:layout_width="wrap_content"
+        style="@style/SampleCard2"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
-        <ProgressBar
-            android:id="@+id/progress"
-            android:progressTint="#ff0000"
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:layout_width="310dp"
-            android:layout_height="wrap_content"
-            android:progress="25" />
+        <FrameLayout
+            android:layout_width="316dp"
+            android:layout_height="match_parent">
+            <ProgressBar
+                android:id="@+id/progress"
+                android:progressTint="#ff0000"
+                android:progressBackgroundTint="#ffffff"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="316dp"
+                android:layout_height="wrap_content"
+                android:progress="25" />
+            <TextView
+                android:layout_width="312dp"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="0%"
+                android:id="@+id/percent_num"
+                android:textSize="17dp"/>
+        </FrameLayout>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/sub_list"

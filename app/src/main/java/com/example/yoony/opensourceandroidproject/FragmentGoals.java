@@ -30,7 +30,8 @@ public class FragmentGoals extends Fragment {
         //TabLayout
         TabLayout tabs = (TabLayout) view.findViewById(R.id.tabs);
         for(int a=0;a<str.length;a++){
-            Log.e("", "added: "+str[a] );
+            Log.e("sangeun", "added: "+str[a] );
+            dbHelper.setRate(str[a],0);
             tabs.addTab(tabs.newTab().setText(str[a]));
         }
 //        tabs.addTab(tabs.newTab().setText(str[0]));
@@ -41,7 +42,7 @@ public class FragmentGoals extends Fragment {
         //어답터설정
         final ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         Log.e("str.length",""+str.length);
-        final Goals_PagerAdapter myPagerAdapter = new Goals_PagerAdapter(getChildFragmentManager(), str.length+1,_id);
+        final Goals_PagerAdapter myPagerAdapter = new Goals_PagerAdapter(getChildFragmentManager(), str.length+1,_id,str);
         viewPager.setAdapter(myPagerAdapter);
 
         //탭메뉴를 클릭하면 해당 프래그먼트로 변경-싱크화

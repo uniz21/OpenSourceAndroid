@@ -8,7 +8,9 @@
         android:id="@+id/EditText2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/dxgulim"
         android:hint="세부 목표를 추가하세요."
-        android:textSize="20dp"
-        android:theme="@style/EditTheme"/>
+        android:textSize="18dp"
+        android:gravity="center"
+        android:theme="@style/EditTheme" />
 </RelativeLayout>

@@ -37,6 +37,40 @@ public class GoalDAO {
         return pass;
     }
 
+    public boolean removeGoal(Goal info) {
+        //최종목표를 삭제하는 함수이다.
+        boolean pass = false;
+        try {
+            //최종목표의 seq값을 찾는 sql문을 만들어 삭제시킨다.
+            String sql = "DELETE FROM IMPORT_DATA_GOAL WHERE _id=?";
+            String[] bindArgsInfo = {String.valueOf(info.getIndexNumber())};
+            mDatabase.execSQL(sql, bindArgsInfo);
+            return true;
+        } catch (Exception e) {
+            L.e(":::::add Exception : " + e.getMessage());
+        }
+        return pass;
+    }
+
+
+    public boolean updateGoal(Goal info) {
+        //최종목표를 삭제하는 함수이다.
+        boolean pass = false;
+        try {
+            ContentValues reportValue = new ContentValues();
+            reportValue.put(DBConst.GoalTable.GOAL_TITLE, info.getGoalTitle());
+            String whereClause = "_id=?";
+            String[] whereArgs = new String[]{
+                    String.valueOf(info.getIndexNumber())
+            };
+            mDatabase.update(DBConst.GoalTable.TABLE_NAME, reportValue, whereClause, whereArgs);
+            return true;
+        } catch (Exception e) {
+            L.e(":::::update Exception : " + e.getMessage());
+        }
+        return pass;
+    }
+
     public List<Goal> getGoalList() {
 
         //ADDEDBYUSER 값이 일치한 id의 차량만 호출하는 쿼리문이다.
