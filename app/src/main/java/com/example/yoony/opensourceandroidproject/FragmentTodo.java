@@ -131,6 +131,7 @@ public class FragmentTodo extends Fragment {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    fragmentPageNow=(int)btn.getId()%100;
                     btn.setFocusableInTouchMode(true);
                     btn.requestFocus();
                     Log.e("test","focus"+btn.isFocused());

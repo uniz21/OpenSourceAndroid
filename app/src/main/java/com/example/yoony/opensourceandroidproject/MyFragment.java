@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,14 @@ public class MyFragment extends Fragment {
     ArrayList<SampleData> a=new ArrayList<SampleData>();//데이터베이스
     MyAdapter myAdapter;
     DBHelper dbHelper;
+
+    private int[] color = new int[]{
+            Color.parseColor("#d6e2fc"), Color.parseColor("#f4d9e3"),
+            Color.parseColor("#fdf2d8"), Color.parseColor("#e5dee1"),
+            Color.parseColor("#e3eedc"), Color.parseColor("#e5fef5"),
+            Color.parseColor("#fcedd7"), Color.parseColor("#fbe7e5"),
+            Color.parseColor("#d2efe3"), Color.parseColor("#e9f7e1")
+    };
 
     private static final String ARG_NO = "ARG_NO";
 
@@ -65,7 +74,7 @@ public class MyFragment extends Fragment {
             for (int k = 0; k < 5; k++) {
                 data[k][i] = temp[i].split("\\|")[k];
             }
-            a.add(new SampleData(Integer.parseInt(data[0][i]), Color.RED, data[1][i], Integer.parseInt(data[4][i])));
+            a.add(new SampleData(Integer.parseInt(data[0][i]), color[dbHelper.MainQuestIndex(data[3][i])], data[1][i], Integer.parseInt(data[4][i])));
         }
     }
 
@@ -113,13 +122,15 @@ public class MyFragment extends Fragment {
         public View getView(final int position, View convertView, ViewGroup parent) {
             final View view = mLayoutInflater.inflate(R.layout.list_data, null);//리스트 양식 샘플
 
-            LinearLayout questcolor = (LinearLayout) view.findViewById(R.id.questColor);
+            CardView questcolor = (CardView) view.findViewById(R.id.questColor);
             TextView todo_thing = (TextView) view.findViewById(R.id.todo_thing);
             CheckBox isDone = (CheckBox) view.findViewById(R.id.isDone);
 
             questcolor.setBackgroundColor(sample.get(position).getQuest());
             todo_thing.setText(sample.get(position).getJob());
             isDone.setChecked(sample.get(position).isChecked());
+
+            sort();
 
             isDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -136,21 +147,29 @@ public class MyFragment extends Fragment {
                         dbHelper.updateisDone(sample.get(position).getId(), 0);
                         sample.get(position).setIschecked(false);
                     }
-                    Collections.sort(sample, new Comparator<SampleData>() {
-                            @Override
-                            public int compare(SampleData o1, SampleData o2) {
-                                if (o1.getisDone() < o2.getisDone()) {
-                                    return -1;
-                                } else if (o1.getisDone() > o2.getisDone()) {
-                                    return 1;
-                                }
-                                return 0;
-                            }
-                    });
+                    sort();
                     myAdapter.notifyDataSetChanged();
                 }
             });
             return view;
+        }
+        public void sort(){
+            Collections.sort(sample, new Comparator<SampleData>() {
+                @Override
+                public int compare(SampleData o1, SampleData o2) {
+                    //수행 여부로 정렬
+                    //메인퀘스트로 한번 더 정렬해야됨
+                    int x=0;
+                    if (o1.getisDone() < o2.getisDone()) {
+                        x = -1;
+                    }else if(o1.getisDone()==o2.getisDone()){
+                        if(o1.getQuest()<o2.getQuest()){
+                            x = -1;
+                        }
+                    }
+                    return x;
+                }
+            });
         }
     }
 }

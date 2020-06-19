@@ -214,6 +214,20 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.e("TodoQuest",""+result);
         return result;
     }
+    public int MainQuestIndex(String quest){
+        SQLiteDatabase db=getReadableDatabase();
+        String result="";
+
+        Cursor cursor=db.rawQuery("select  "+DBConst.GoalTable._ID+" from "+DBConst.GoalTable.TABLE_NAME +" where "+DBConst.GoalTable.GOAL_TITLE+"='"+quest+"'" ,null);
+        while (cursor.moveToNext()){
+            result+=cursor.getString(0);
+        }
+        Log.e("TodoQuestindex",""+result);
+        if(result==""){
+            return 0;
+        }
+        return Integer.parseInt(result)-1;
+    }
 
     public String SubQuest(){
         SQLiteDatabase db=getReadableDatabase();
