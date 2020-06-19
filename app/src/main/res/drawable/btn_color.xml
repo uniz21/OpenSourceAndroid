@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_focused="false" android:state_pressed="false">
         <shape>
-            <solid android:color="#d2d2d2" />
+            <solid android:color="#f3ad63" />
             <corners android:radius="300dp" />
             <padding android:bottom="15dp" android:left="15dp"
                 android:right="15dp" android:top="15dp"  />
@@ -13,7 +13,7 @@
     <!-- click -->
     <item android:state_focused="false" android:state_pressed="true">
         <shape>
-            <solid android:color="#ababab" />
+            <solid android:color="#e18827" />
             <corners android:radius="300dp" />
             <padding android:bottom="15dp" android:left="15dp"
                 android:right="15dp" android:top="15dp" />

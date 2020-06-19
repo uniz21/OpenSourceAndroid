@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    >
-
-<!--    <PreferenceCategory android:title="설정">-->
-
-<!--        <SwitchPreference-->
-<!--            android:key="message"-->
-<!--            android:title="알림 켜기"/>-->
-
-<!--    </PreferenceCategory>-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <PreferenceCategory android:title="라이선스 정보">
 
-        <Preference
+        <PreferenceScreen
             android:title="라이선스"
             android:summary="라이선스 보기">
+            <intent android:targetPackage="com.example.yoony.opensourceandroidproject"
+                android:targetClass="com.example.yoony.opensourceandroidproject.LicenseActivity" />
 
-        </Preference>
+        </PreferenceScreen>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="어플 정보" >

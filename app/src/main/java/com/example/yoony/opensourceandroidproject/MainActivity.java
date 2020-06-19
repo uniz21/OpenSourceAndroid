@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -190,6 +191,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             transaction.replace(R.id.main_fragment, fragmentshop);
             transaction.commit();
         } else if (id == R.id.nav_setting) {
+//            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//            settingPreferenceFragment settingPreferencefragment = new settingPreferenceFragment();
+//            transaction.replace(R.id.main_fragment, settingPreferencefragment);
+//            transaction.commit();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             FragmentSetting fragmentSetting = new FragmentSetting();
             transaction.replace(R.id.main_fragment, fragmentSetting);

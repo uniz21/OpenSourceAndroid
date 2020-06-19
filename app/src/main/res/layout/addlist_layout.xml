@@ -3,7 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/addlistfragment">
+    android:id="@+id/addlistfragment"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="0dp"
+    android:paddingTop="0dp">
 
     <TextView
         android:layout_width="wrap_content"
@@ -27,6 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:datePickerMode="spinner"
+        android:calendarTextColor="#000000"
         android:calendarViewShown="false"></DatePicker>
 
     <TextView

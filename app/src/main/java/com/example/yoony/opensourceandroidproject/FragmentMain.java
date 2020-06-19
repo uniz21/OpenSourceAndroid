@@ -140,11 +140,11 @@ public class FragmentMain extends Fragment {
 
         //10번 인덱스까지 색상을 변경할 배경을 만들도록한다.
         private int[] caredViewBackGround = new int[]{
-                Color.parseColor("#d6e2fc"), Color.parseColor("#f4d9e3"),
+                Color.parseColor("#e9f7e1"), Color.parseColor("#f4d9e3"),
                 Color.parseColor("#fdf2d8"), Color.parseColor("#e5dee1"),
                 Color.parseColor("#e3eedc"), Color.parseColor("#e5fef5"),
                 Color.parseColor("#fcedd7"), Color.parseColor("#fbe7e5"),
-                Color.parseColor("#d2efe3"), Color.parseColor("#e9f7e1")
+                Color.parseColor("#d2efe3"), Color.parseColor("#d6e2fc")
         };
 
         public RecyclerAdapter() {
@@ -188,7 +188,13 @@ public class FragmentMain extends Fragment {
             Goal goal = listdata.get(i);
 
             itemViewHolder.maintext.setText(goal.getGoalTitle());
-            itemViewHolder.progress_num.setText(String.valueOf(dbHelper.selectRate(goal.getGoalTitle()))+"%");
+
+            if(dbHelper.isMainQuestinRate(goal.getGoalTitle())==false){
+                itemViewHolder.progress_num.setText(String.valueOf("0%"));
+            }
+            else {
+                itemViewHolder.progress_num.setText(String.valueOf(dbHelper.selectRate(goal.getGoalTitle()))+"%");
+            }
             itemViewHolder.progressBar.setProgress(dbHelper.selectRate(goal.getGoalTitle()));
             itemViewHolder.cardView.setBackgroundColor(i < 10 ? caredViewBackGround[i] : Color.parseColor("#ffffff"));
 

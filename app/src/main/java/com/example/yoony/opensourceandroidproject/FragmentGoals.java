@@ -21,6 +21,7 @@ public class FragmentGoals extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view= inflater.inflate(R.layout.fragment_goals, container, false);
+        View view1 = inflater.inflate(R.layout.content_main, container, false);
         super.onCreate(savedInstanceState);
 
         DBHelper dbHelper=new DBHelper(view.getContext(),"QuestApp.db",null,1);
@@ -50,6 +51,11 @@ public class FragmentGoals extends Fragment {
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs));
 
 
-        return view;
+        if(dbHelper.MainQuest()==""){
+            return view1;
+        }
+        else{
+            return view;
+        }
     }
 }
