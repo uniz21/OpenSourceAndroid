@@ -1,30 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_marginTop="3dp"
-    android:layout_marginBottom="3dp">
-
-    <android.support.v7.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/questColor"
+    android:layout_width="match_parent"
+    android:orientation="horizontal">
+    <!--리스트뷰는 margin을 줘도 자동으로 양끝으로 잡아서 레이아웃을 밖에 하나 더 뒀다.-->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        card_view:cardCornerRadius="10dp"
-        card_view:cardElevation="10dp"
-        card_view:cardPreventCornerOverlap="true">
+        android:orientation="horizontal"
+        android:id="@+id/listLayout"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/round_layout_shape">
 
         <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -32,16 +25,16 @@
                 android:id="@+id/todo_thing"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="할일 ~~~~~~~~"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:layout_weight="1"/>
+                android:text="할일 ~~~~~~~~" />
 
             <CheckBox
                 android:id="@+id/isDone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="8"/>
+                android:layout_weight="8" />
 
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </LinearLayout>
 </LinearLayout>

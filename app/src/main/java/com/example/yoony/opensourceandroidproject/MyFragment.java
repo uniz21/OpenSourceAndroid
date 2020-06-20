@@ -1,13 +1,13 @@
 package com.example.yoony.opensourceandroidproject;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -62,7 +61,8 @@ public class MyFragment extends Fragment {
         }
         myAdapter = new MyAdapter(getActivity(),a);
         ListView listView = (ListView)view.findViewById(R.id.listView);
-        listView.setDivider(null);
+        listView.setDivider(new ColorDrawable(Color.TRANSPARENT));
+        listView.setDividerHeight(15);
         listView.setAdapter(myAdapter);//어댑터 연결
 
         return view;
@@ -123,11 +123,12 @@ public class MyFragment extends Fragment {
         public View getView(final int position, View convertView, ViewGroup parent) {
             final View view = mLayoutInflater.inflate(R.layout.list_data, null);//리스트 양식 샘플
 
-            CardView questcolor = (CardView) view.findViewById(R.id.questColor);
+            LinearLayout questcolor = (LinearLayout) view.findViewById(R.id.listLayout);
+            GradientDrawable shape = (GradientDrawable) questcolor.getBackground();
             TextView todo_thing = (TextView) view.findViewById(R.id.todo_thing);
             CheckBox isDone = (CheckBox) view.findViewById(R.id.isDone);
 
-            questcolor.setBackgroundColor(sample.get(position).getQuest());
+            shape.setColor(sample.get(position).getQuest());
             todo_thing.setText(sample.get(position).getJob());
             isDone.setChecked(sample.get(position).isChecked());
 
