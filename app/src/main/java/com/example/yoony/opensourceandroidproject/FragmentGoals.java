@@ -43,7 +43,7 @@ public class FragmentGoals extends Fragment {
         //어답터설정
         final ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         Log.e("str.length",""+str.length);
-        final Goals_PagerAdapter myPagerAdapter = new Goals_PagerAdapter(getChildFragmentManager(), str.length+1,_id,str);
+        final Goals_PagerAdapter myPagerAdapter = new Goals_PagerAdapter(getChildFragmentManager(), str.length,_id,str);
         viewPager.setAdapter(myPagerAdapter);
 
         //탭메뉴를 클릭하면 해당 프래그먼트로 변경-싱크화

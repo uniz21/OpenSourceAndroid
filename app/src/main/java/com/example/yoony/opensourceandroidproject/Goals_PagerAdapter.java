@@ -24,17 +24,10 @@ public class Goals_PagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        if(position==(mNumOfTabs-1)){
-            Log.e("position",""+position);
-            Goals_Fragment1 tab1 = new Goals_Fragment1();
-            tab1.getInstance(str[position-1], main_name[position-1]);
-            return tab1;
-        }else{
-            Log.e("position",""+position);
-            Goals_Fragment1 tab1 = new Goals_Fragment1();
-            tab1.getInstance(str[position], main_name[position]);
-            return tab1;
-        }
+        Log.e("position",""+position);
+        Goals_Fragment1 tab1 = new Goals_Fragment1();
+        tab1.getInstance(str[position], main_name[position]);
+        return tab1;
     }
 
     @Override
