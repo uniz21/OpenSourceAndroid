@@ -32,11 +32,11 @@ public class MyFragment extends Fragment {
     DBHelper dbHelper;
 
     private int[] color = new int[]{
-            Color.parseColor("#d6e2fc"), Color.parseColor("#f4d9e3"),
+            Color.parseColor("#e9f7e1"), Color.parseColor("#f4d9e3"),
             Color.parseColor("#fdf2d8"), Color.parseColor("#e5dee1"),
             Color.parseColor("#e3eedc"), Color.parseColor("#e5fef5"),
             Color.parseColor("#fcedd7"), Color.parseColor("#fbe7e5"),
-            Color.parseColor("#d2efe3"), Color.parseColor("#e9f7e1")
+            Color.parseColor("#d2efe3"), Color.parseColor("#d6e2fc")
     };
 
     private static final String ARG_NO = "ARG_NO";
@@ -62,6 +62,7 @@ public class MyFragment extends Fragment {
         }
         myAdapter = new MyAdapter(getActivity(),a);
         ListView listView = (ListView)view.findViewById(R.id.listView);
+        listView.setDivider(null);
         listView.setAdapter(myAdapter);//어댑터 연결
 
         return view;
