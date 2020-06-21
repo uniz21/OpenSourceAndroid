@@ -23,12 +23,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class BaseAsyncTask<Params, Progress, Result> {
+    /**
+     * An {@link Executor} that executes tasks one at a time in serial
+     * order.  This serialization is global to a particular process.
+     */
+    public static final Executor SERIAL_EXECUTOR = new SerialExecutor();
     private static final String TAG = BaseAsyncTask.class.getSimpleName();
-
     private static final int CORE_POOL_SIZE = 5;
     private static final int MAXIMUM_POOL_SIZE = 128;
     private static final int KEEP_ALIVE = 1;
-
     private static final ThreadFactory sThreadFactory = new ThreadFactory() {
         private final AtomicInteger mCount = new AtomicInteger(1);
 
@@ -36,20 +39,11 @@ public abstract class BaseAsyncTask<Params, Progress, Result> {
             return new Thread(r, "AsyncTask #" + mCount.getAndIncrement());
         }
     };
-
     private static final BlockingQueue<Runnable> sPoolWorkQueue = new LinkedBlockingQueue<Runnable>(10);
-
     /**
      * An {@link Executor} that can be used to execute tasks in parallel.
      */
     public static final Executor THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(CORE_POOL_SIZE, MAXIMUM_POOL_SIZE, KEEP_ALIVE, TimeUnit.SECONDS, sPoolWorkQueue, sThreadFactory);
-
-    /**
-     * An {@link Executor} that executes tasks one at a time in serial
-     * order.  This serialization is global to a particular process.
-     */
-    public static final Executor SERIAL_EXECUTOR = new SerialExecutor();
-
     private static final int MESSAGE_POST_RESULT = 0x1;
     private static final int MESSAGE_POST_PROGRESS = 0x2;
 
@@ -58,70 +52,9 @@ public abstract class BaseAsyncTask<Params, Progress, Result> {
     private static volatile Executor sDefaultExecutor = SERIAL_EXECUTOR;
     private final WorkerRunnable<Params, Result> mWorker;
     private final FutureTask<Result> mFuture;
-
-    private volatile Status mStatus = Status.PENDING;
-
     private final AtomicBoolean mCancelled = new AtomicBoolean();
     private final AtomicBoolean mTaskInvoked = new AtomicBoolean();
-
-    private static class SerialExecutor implements Executor {
-        final ArrayDeque<Runnable> mTasks = new ArrayDeque<Runnable>();
-        Runnable mActive;
-
-        public synchronized void execute(final Runnable r) {
-            mTasks.offer(new Runnable() {
-                public void run() {
-                    try {
-                        r.run();
-                    } finally {
-                        scheduleNext();
-                    }
-                }
-            });
-            if (mActive == null) {
-                scheduleNext();
-            }
-        }
-
-        protected synchronized void scheduleNext() {
-            if ((mActive = mTasks.poll()) != null) {
-                THREAD_POOL_EXECUTOR.execute(mActive);
-            }
-        }
-    }
-
-    /**
-     * Indicates the current status of the task. Each status will be set only once
-     * during the lifetime of a task.
-     */
-    public enum Status {
-        /**
-         * Indicates that the task has not been executed yet.
-         */
-        PENDING,
-        /**
-         * Indicates that the task is running.
-         */
-        RUNNING,
-        /**
-         * Indicates that {@link AsyncTask#onPostExecute} has finished.
-         */
-        FINISHED,
-    }
-
-    /**
-     * @hide Used to force static handler to be created.
-     */
-    public static void init() {
-        sHandler.getLooper();
-    }
-
-    /**
-     * @hide
-     */
-    public static void setDefaultExecutor(Executor exec) {
-        sDefaultExecutor = exec;
-    }
+    private volatile Status mStatus = Status.PENDING;
 
     /**
      * Creates a new asynchronous task. This constructor must be invoked on the UI thread.
@@ -151,6 +84,24 @@ public abstract class BaseAsyncTask<Params, Progress, Result> {
                 }
             }
         };
+    }
+
+    /**
+     * @hide Used to force static handler to be created.
+     */
+    public static void init() {
+        sHandler.getLooper();
+    }
+
+    /**
+     * @hide
+     */
+    public static void setDefaultExecutor(Executor exec) {
+        sDefaultExecutor = exec;
+    }
+
+    public static void execute(Runnable runnable) {
+        sDefaultExecutor.execute(runnable);
     }
 
     private void postResultIfNotInvoked(Result result) {
@@ -232,10 +183,6 @@ public abstract class BaseAsyncTask<Params, Progress, Result> {
         return this;
     }
 
-    public static void execute(Runnable runnable) {
-        sDefaultExecutor.execute(runnable);
-    }
-
     protected final void publishProgress(Progress... values) {
         if (!isCancelled()) {
             sHandler.obtainMessage(MESSAGE_POST_PROGRESS, new AsyncTaskResult<Progress>(this, values)).sendToTarget();
@@ -249,6 +196,51 @@ public abstract class BaseAsyncTask<Params, Progress, Result> {
             onPostExecute(result);
         }
         mStatus = Status.FINISHED;
+    }
+
+    /**
+     * Indicates the current status of the task. Each status will be set only once
+     * during the lifetime of a task.
+     */
+    public enum Status {
+        /**
+         * Indicates that the task has not been executed yet.
+         */
+        PENDING,
+        /**
+         * Indicates that the task is running.
+         */
+        RUNNING,
+        /**
+         * Indicates that {@link AsyncTask#onPostExecute} has finished.
+         */
+        FINISHED,
+    }
+
+    private static class SerialExecutor implements Executor {
+        final ArrayDeque<Runnable> mTasks = new ArrayDeque<Runnable>();
+        Runnable mActive;
+
+        public synchronized void execute(final Runnable r) {
+            mTasks.offer(new Runnable() {
+                public void run() {
+                    try {
+                        r.run();
+                    } finally {
+                        scheduleNext();
+                    }
+                }
+            });
+            if (mActive == null) {
+                scheduleNext();
+            }
+        }
+
+        protected synchronized void scheduleNext() {
+            if ((mActive = mTasks.poll()) != null) {
+                THREAD_POOL_EXECUTOR.execute(mActive);
+            }
+        }
     }
 
     private static class InternalHandler extends Handler {

@@ -1,14 +1,19 @@
 package com.example.yoony.opensourceandroidproject;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,20 +21,36 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private static int ONE_MINUTE = 5626;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("당근과 채찍");
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//OREO이상 버전 부터는 알림채널을 만들어주어야한다.
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationChannel notificationChannel = new NotificationChannel("당근_채찍", "퀘스트앱", NotificationManager.IMPORTANCE_DEFAULT);
+            notificationChannel.setDescription("channel description");
+            //불빛,색상,진동패턴 등 해당 채널의 알림동작 설정
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.GREEN);
+            notificationChannel.enableVibration(true);
+            notificationChannel.setVibrationPattern(new long[]{100, 200, 100, 200});
+            notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+        new AlarmHATT(getApplicationContext()).Alarm();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -64,10 +85,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 super.onDrawerOpened(drawerView);
                 final DBHelper dbHelper = new DBHelper(getApplicationContext(), "QuestApp.db", null, 1);
 
-                try{
+                try {
                     dbHelper.selectUsername();
-                }catch (Exception e){
-                    dbHelper.setUserNickname("user",0);
+                } catch (Exception e) {
+                    dbHelper.setUserNickname("user", 0);
                 }
 
                 //setContentView(R.layout.nav_header_main);
@@ -91,25 +112,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 nickname.setOnKeyListener(new View.OnKeyListener() {
                     @Override
                     public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                        if((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && (i == KeyEvent.KEYCODE_ENTER)){
+                        if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && (i == KeyEvent.KEYCODE_ENTER)) {
                             InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-                            imm.hideSoftInputFromWindow( nickname.getWindowToken(), 0);
+                            imm.hideSoftInputFromWindow(nickname.getWindowToken(), 0);
                             return true;
                         }
                         return false;
                     }
                 });
-                TextView point = (TextView)findViewById(R.id.user_point);
+                TextView point = (TextView) findViewById(R.id.user_point);
 
-                if(dbHelper.selectUsername()==""){
-                    dbHelper.setUserNickname("user",0);
-                }
-                else {
+                if (dbHelper.selectUsername() == "") {
+                    dbHelper.setUserNickname("user", 0);
+                } else {
                     String ds = dbHelper.selectUsername();
                     int dd = dbHelper.selectUserpoint();
                     String de = String.valueOf(dd);
                     nickname.setText(ds);
-                    point.setText(de+" point");
+                    point.setText(de + " point");
                 }
             }
 
@@ -206,5 +226,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public class AlarmHATT {
+        private Context context;
+
+        public AlarmHATT(Context context) {
+            this.context = context;
+        }
+
+        public void Alarm() {
+            AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(MainActivity.this, BroadcastD.class);
+
+            PendingIntent sender = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
+
+            Calendar calendar = Calendar.getInstance();
+
+            calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE)+1, 0,0,0);
+            am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY, sender);
+        }
     }
 }

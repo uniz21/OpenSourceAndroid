@@ -4,9 +4,7 @@ import android.content.Context;
 
 import com.example.yoony.opensourceandroidproject.L;
 import com.example.yoony.opensourceandroidproject.db.DbHelper;
-import com.example.yoony.opensourceandroidproject.db.dao.GoalDAO;
 import com.example.yoony.opensourceandroidproject.db.dao.GoalSubDAO;
-import com.example.yoony.opensourceandroidproject.db.model.Goal;
 import com.example.yoony.opensourceandroidproject.db.model.GoalSub;
 
 import java.util.List;

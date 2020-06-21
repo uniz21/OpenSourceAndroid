@@ -4,8 +4,7 @@
         <shape>
             <solid android:color="#f3ad63" />
             <corners android:radius="300dp" />
-            <padding android:bottom="15dp" android:left="15dp"
-                android:right="15dp" android:top="15dp"  />
+            <padding android:bottom="15dp" android:left="15dp" android:right="15dp" android:top="15dp" />
 
         </shape>
     </item>
@@ -15,8 +14,7 @@
         <shape>
             <solid android:color="#e18827" />
             <corners android:radius="300dp" />
-            <padding android:bottom="15dp" android:left="15dp"
-                android:right="15dp" android:top="15dp" />
+            <padding android:bottom="15dp" android:left="15dp" android:right="15dp" android:top="15dp" />
         </shape>
     </item>
 </selector>

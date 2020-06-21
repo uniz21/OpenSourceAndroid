@@ -18,18 +18,18 @@ public class DbHelper extends SQLiteOpenHelper {
     //db Transaction 관리 위한 database 객체
     private SQLiteDatabase mSqliteDatabase = null;
 
-    public static synchronized DbHelper getInstance(Context context) {
-        if (mInstance == null) {
-            mInstance = new DbHelper(context);
-        }
-        return mInstance;
-    }
-
     private DbHelper(Context context) throws SQLiteException {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
         mSqliteDatabase = super.getWritableDatabase();
 
+    }
+
+    public static synchronized DbHelper getInstance(Context context) {
+        if (mInstance == null) {
+            mInstance = new DbHelper(context);
+        }
+        return mInstance;
     }
 
     public synchronized SQLiteDatabase getWritableDatabase() {

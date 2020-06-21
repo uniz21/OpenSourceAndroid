@@ -9,10 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -23,14 +21,16 @@ public class AddListFragment extends Fragment {
     Spinner equest;
     EditText ejob;
     DatePicker edate;
-    int prevPage=0;
-    LinearLayout t,b;
-    public AddListFragment(){}
+    int prevPage = 0;
+    LinearLayout t, b;
 
-    public void getInstance(int prevPage, LinearLayout t, LinearLayout b){
-        this.prevPage=prevPage;
-        this.t=t;
-        this.b=b;
+    public AddListFragment() {
+    }
+
+    public void getInstance(int prevPage, LinearLayout t, LinearLayout b) {
+        this.prevPage = prevPage;
+        this.t = t;
+        this.b = b;
     }
 
     @Override
@@ -42,18 +42,18 @@ public class AddListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view=inflater.inflate(R.layout.addlist_layout,null);
-        addBtn=(Button)view.findViewById(R.id.addBtn);
-        equest=(Spinner) view.findViewById(R.id.spinner1);
-        edate=(DatePicker) view.findViewById(R.id.date);
-        ejob=(EditText)view.findViewById(R.id.job);
+        final View view = inflater.inflate(R.layout.addlist_layout, null);
+        addBtn = (Button) view.findViewById(R.id.addBtn);
+        equest = (Spinner) view.findViewById(R.id.spinner1);
+        edate = (DatePicker) view.findViewById(R.id.date);
+        ejob = (EditText) view.findViewById(R.id.job);
 
-        DBHelper dbHelper=new DBHelper(view.getContext(),"QuestApp.db",null,1);
+        DBHelper dbHelper = new DBHelper(view.getContext(), "QuestApp.db", null, 1);
 
-        String[] questdata=dbHelper.MainQuest().split("\n");
-        Log.e("quest",questdata.toString());
+        String[] questdata = dbHelper.MainQuest().split("\n");
+        Log.e("quest", questdata.toString());
 
-        ArrayAdapter adapter = new ArrayAdapter(view.getContext(),R.layout.spin,questdata);
+        ArrayAdapter adapter = new ArrayAdapter(view.getContext(), R.layout.spin, questdata);
         adapter.setDropDownViewResource(R.layout.spin_dropdown);
 
         equest.setAdapter(adapter);
@@ -62,12 +62,12 @@ public class AddListFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String quest = equest.getSelectedItem().toString();
-                int date = ((edate.getMonth()+1)*100)+edate.getDayOfMonth();
+                int date = ((edate.getMonth() + 1) * 100) + edate.getDayOfMonth();
                 String job = ejob.getText().toString();
 
-                dbHelper.insert(job,date,quest);
-                FragmentManager fragmentManager=getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.fragment_container,MyFragment.getInstace(prevPage)).addToBackStack(null).commit();//이전 프레그먼트로 돌아가야함
+                dbHelper.insert(job, date, quest);
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.fragment_container, MyFragment.getInstace(prevPage)).addToBackStack(null).commit();//이전 프레그먼트로 돌아가야함
                 b.setVisibility(View.VISIBLE);
                 t.setVisibility(View.VISIBLE);
             }

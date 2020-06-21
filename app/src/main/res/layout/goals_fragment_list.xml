@@ -10,8 +10,8 @@
         android:orientation="vertical">
 
         <TextView
-            style="@style/Text.Title"
             android:id="@+id/subgoal"
+            style="@style/Text.Title"
             android:layout_width="@dimen/content_width"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin"

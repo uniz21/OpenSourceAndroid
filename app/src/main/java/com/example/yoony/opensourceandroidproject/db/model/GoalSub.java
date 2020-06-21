@@ -1,7 +1,6 @@
 package com.example.yoony.opensourceandroidproject.db.model;
 
 
-
 public class GoalSub {
     private int indexNumber;
     private String addedByUser;

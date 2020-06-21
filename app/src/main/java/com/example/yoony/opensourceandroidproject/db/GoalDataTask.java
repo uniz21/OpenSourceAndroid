@@ -26,17 +26,17 @@ public class GoalDataTask extends BaseAsyncTask<Void, Void, List<Goal>> {
         }
     }
 
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+    }
+
     public interface TaskListener {
         void onComplete(List<Goal> data);
     }
 
     public interface DataFetcher {
         List<Goal> getData();
-    }
-
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
     }
 
     public static class Builder {

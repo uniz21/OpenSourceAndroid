@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:id="@+id/addlistfragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingLeft="20dp"
+    android:paddingTop="0dp"
     android:paddingRight="20dp"
-    android:paddingBottom="0dp"
-    android:paddingTop="0dp">
+    android:paddingBottom="0dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:text="메인퀘스트"/>
+        android:text="메인퀘스트" />
 
     <Spinner
+        android:id="@+id/spinner1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:id="@+id/spinner1"/>
+        android:layout_marginBottom="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="날짜"/>
+        android:text="날짜" />
 
     <DatePicker
         android:id="@+id/date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:datePickerMode="spinner"
         android:calendarTextColor="#000000"
-        android:calendarViewShown="false"></DatePicker>
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"></DatePicker>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:text="할일"/>
+        android:text="할일" />
 
     <EditText
         android:id="@+id/job"
@@ -47,12 +47,12 @@
         android:hint="Job" />
 
     <Button
+        android:id="@+id/addBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:id="@+id/addBtn"
         android:background="@drawable/btn_color"
-        android:text="추가하기"
-        android:layout_gravity="center"/>
+        android:text="추가하기" />
 
 </LinearLayout>

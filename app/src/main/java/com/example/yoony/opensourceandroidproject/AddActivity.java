@@ -1,10 +1,7 @@
 package com.example.yoony.opensourceandroidproject;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,22 +9,18 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.yoony.opensourceandroidproject.db.factory.GoalDAOFactory;
 import com.example.yoony.opensourceandroidproject.db.factory.GoalSubDAOFactory;
 import com.example.yoony.opensourceandroidproject.db.model.Goal;
 import com.example.yoony.opensourceandroidproject.db.model.GoalSub;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class AddActivity extends AppCompatActivity {
+    public ArrayList<SubItemView> mSubItemViewList = new ArrayList<>();
     LinearLayout LL;
     EditText edtText;
-    public ArrayList<SubItemView> mSubItemViewList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -16,21 +16,21 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:contentDescription="@string/nav_header_desc"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:layout_gravity="center"
         app:srcCompat="@mipmap/ic_launcher_round" />
 
     <EditText
         android:id="@+id/user_nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/dxgulim"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="닉네임"
-        android:background="@android:color/transparent"
-        android:layout_gravity="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:fontFamily="@font/dxgulim"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
         android:id="@+id/user_point"

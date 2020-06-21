@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
  * Created by user on 2016-12-23.
  */
 
-public class Goals_Sub extends LinearLayout{
+public class Goals_Sub extends LinearLayout {
 
     public Goals_Sub(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -22,8 +22,9 @@ public class Goals_Sub extends LinearLayout{
 
         init(context);
     }
-    private void init(Context context){
-        LayoutInflater inflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.goals_holder,this,true);
+
+    private void init(Context context) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater.inflate(R.layout.goals_holder, this, true);
     }
 }

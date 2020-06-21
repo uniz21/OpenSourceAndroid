@@ -4,15 +4,15 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="30dp"
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="30dp"
         android:orientation="horizontal">
 
         <EditText
@@ -20,9 +20,9 @@
             android:layout_width="110dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:hint="아이템명"
-            android:gravity="center"
             android:fontFamily="@font/dxgulim"
+            android:gravity="center"
+            android:hint="아이템명"
             android:inputType="textPersonName" />
 
         <EditText
@@ -30,9 +30,9 @@
             android:layout_width="110dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:hint="포인트"
-            android:gravity="center"
             android:fontFamily="@font/dxgulim"
+            android:gravity="center"
+            android:hint="포인트"
             android:inputType="number" />
 
         <Button
@@ -40,10 +40,10 @@
             android:layout_width="10dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/btn_color"
             android:text="+"
             android:textFontWeight="6"
-            android:textSize="20dp"
-            android:background="@drawable/btn_color"  />
+            android:textSize="20dp" />
 
     </LinearLayout>
 
@@ -51,9 +51,9 @@
         android:id="@+id/gridView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:verticalSpacing="30dp"
         android:layout_below="@+id/linearLayout"
-        android:numColumns="3" />
+        android:layout_alignParentStart="true"
+        android:numColumns="3"
+        android:verticalSpacing="30dp" />
 
 </RelativeLayout>

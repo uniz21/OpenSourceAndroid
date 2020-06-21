@@ -24,16 +24,16 @@ public class SingerViewer extends LinearLayout {
         init(context);
     }
 
-    public void init(Context context){
+    public void init(Context context) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.singer_shop_item,this,true);
+        inflater.inflate(R.layout.singer_shop_item, this, true);
 
-        textView = (TextView)findViewById(R.id.textView);
-        textView2 = (TextView)findViewById(R.id.textView2);
+        textView = (TextView) findViewById(R.id.textView);
+        textView2 = (TextView) findViewById(R.id.textView2);
         imageView = (ImageView) findViewById(R.id.imageView);
     }
 
-    public void setItem(SingerShopItem singerItem){
+    public void setItem(SingerShopItem singerItem) {
         textView.setText(singerItem.getName());
         textView2.setText(String.valueOf(singerItem.getCost()));
         imageView.setImageResource(singerItem.getImage());

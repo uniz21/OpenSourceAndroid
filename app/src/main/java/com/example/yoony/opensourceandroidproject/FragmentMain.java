@@ -131,12 +131,7 @@ public class FragmentMain extends Fragment {
     }
 
     abstract class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemViewHolder> {
-        abstract void setSelected(Goal goal);
-
-        abstract void setDeleted(Goal goal, int index);
-
         private List<Goal> listdata;
-
         //10번 인덱스까지 색상을 변경할 배경을 만들도록한다.
         private int[] caredViewBackGround = new int[]{
                 Color.parseColor("#e9f7e1"), Color.parseColor("#f4d9e3"),
@@ -145,10 +140,15 @@ public class FragmentMain extends Fragment {
                 Color.parseColor("#fcedd7"), Color.parseColor("#fbe7e5"),
                 Color.parseColor("#d2efe3"), Color.parseColor("#d6e2fc")
         };
+        private AdapterView.OnItemClickListener mListener = null;
 
         public RecyclerAdapter() {
 
         }
+
+        abstract void setSelected(Goal goal);
+
+        abstract void setDeleted(Goal goal, int index);
 
         public void updateItems(List<Goal> items) {
             if (this.listdata == null) {
@@ -168,8 +168,6 @@ public class FragmentMain extends Fragment {
             }
         }
 
-        private AdapterView.OnItemClickListener mListener = null;
-
         @NonNull
         @Override
         public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {//recycler 빼기
@@ -188,11 +186,10 @@ public class FragmentMain extends Fragment {
 
             itemViewHolder.maintext.setText(goal.getGoalTitle());
 
-            if(dbHelper.isMainQuestinRate(goal.getGoalTitle())==false){
+            if (dbHelper.isMainQuestinRate(goal.getGoalTitle()) == false) {
                 itemViewHolder.progress_num.setText(String.valueOf("0%"));
-            }
-            else {
-                itemViewHolder.progress_num.setText(String.valueOf(dbHelper.selectRate(goal.getGoalTitle()))+"%");
+            } else {
+                itemViewHolder.progress_num.setText(String.valueOf(dbHelper.selectRate(goal.getGoalTitle())) + "%");
             }
             itemViewHolder.progressBar.setProgress(dbHelper.selectRate(goal.getGoalTitle()));
             itemViewHolder.cardView.setBackgroundColor(i < 10 ? caredViewBackGround[i] : Color.parseColor("#ffffff"));
@@ -208,13 +205,13 @@ public class FragmentMain extends Fragment {
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     setDeleted(goal, i);
-                                    Toast.makeText(getActivity().getApplicationContext(),"삭제하였습니다.",Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity().getApplicationContext(), "삭제하였습니다.", Toast.LENGTH_LONG).show();
                                 }
                             });
                     builder.setNegativeButton("아니오",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Toast.makeText(getActivity().getApplicationContext(),"아니오를 선택했습니다.",Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity().getApplicationContext(), "아니오를 선택했습니다.", Toast.LENGTH_LONG).show();
                                 }
                             });
                     builder.show();

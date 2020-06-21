@@ -4,19 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.yoony.opensourceandroidproject.db.GoalDataTask;
 import com.example.yoony.opensourceandroidproject.db.GoalSubDataTask;
-import com.example.yoony.opensourceandroidproject.db.factory.GoalDAOFactory;
 import com.example.yoony.opensourceandroidproject.db.factory.GoalSubDAOFactory;
 import com.example.yoony.opensourceandroidproject.db.model.Goal;
 import com.example.yoony.opensourceandroidproject.db.model.GoalSub;
@@ -32,6 +27,27 @@ public class DetailActivity extends AppCompatActivity {
     private ArrayList<SubItemView> mSubItemViewList = new ArrayList<>();
     private List<GoalSub> mCurrentGoalSubList;
     private Goal mCurrentGoalItem;
+    private View.OnLongClickListener deleteClickListener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View view) {
+            L.i(":::이벤트 발생.. " + view.getTag());
+
+            try {
+                int pos = (int) view.getTag();
+                boolean isDelete = GoalSubDAOFactory.removeGoalSub(getApplicationContext(), mCurrentGoalSubList.get(pos));
+                if (isDelete) {
+                    if (mCurrentGoalSubList != null && mCurrentGoalSubList.size() > 0) {
+                        mCurrentGoalSubList.remove(pos);
+                    }
+                    LL.removeAllViews();
+                    onGoalSubDataLoad(mCurrentGoalItem.getGoalTitle(), String.valueOf(mCurrentGoalItem.getIndexNumber()));
+                }
+            } catch (Exception e) {
+
+            }
+            return true;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +89,6 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
-
     public View getChildView() {
         View childView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_sub_goal_holder_detail, null);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -91,7 +106,6 @@ public class DetailActivity extends AppCompatActivity {
         mSubItemViewList.add(new SubItemView(tvSubGoal));
         LL.addView(childView);
     }
-
 
     private void onGoalSubDataLoad(String title, String addedByUser) {
         tvGoal.setText(title);
@@ -124,27 +138,5 @@ public class DetailActivity extends AppCompatActivity {
         }).build();
         task.execute();
     }
-
-    private View.OnLongClickListener deleteClickListener = new View.OnLongClickListener() {
-        @Override
-        public boolean onLongClick(View view) {
-            L.i(":::이벤트 발생.. " + view.getTag());
-
-            try {
-                int pos = (int) view.getTag();
-                boolean isDelete = GoalSubDAOFactory.removeGoalSub(getApplicationContext(), mCurrentGoalSubList.get(pos));
-                if (isDelete) {
-                    if (mCurrentGoalSubList != null && mCurrentGoalSubList.size() > 0) {
-                        mCurrentGoalSubList.remove(pos);
-                    }
-                    LL.removeAllViews();
-                    onGoalSubDataLoad(mCurrentGoalItem.getGoalTitle(), String.valueOf(mCurrentGoalItem.getIndexNumber()));
-                }
-            } catch (Exception e) {
-
-            }
-            return true;
-        }
-    };
 
 }

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="horizontal">
     <!--리스트뷰는 margin을 줘도 자동으로 양끝으로 잡아서 레이아웃을 밖에 하나 더 뒀다.-->
     <LinearLayout
+        android:id="@+id/listLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/listLayout"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:background="@drawable/round_layout_shape">
+        android:background="@drawable/round_layout_shape"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -2,7 +2,6 @@ package com.example.yoony.opensourceandroidproject;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -38,14 +37,14 @@ public class FragmentShop extends Fragment {
 
         dbHelper = new DBHelper(view.getContext(), "QuestApp.db", null, 1);
 
-        if(dbHelper.isEmptyShopItem()==0){
+        if (dbHelper.isEmptyShopItem() == 0) {
             createShopList();
         }
 
-        gridView = (GridView)view.findViewById(R.id.gridView);
-        editText = (EditText)view.findViewById(R.id.editText);
-        editText2 = (EditText)view.findViewById(R.id.editText2);
-        button = (Button)view.findViewById(R.id.button);
+        gridView = (GridView) view.findViewById(R.id.gridView);
+        editText = (EditText) view.findViewById(R.id.editText);
+        editText2 = (EditText) view.findViewById(R.id.editText2);
+        button = (Button) view.findViewById(R.id.button);
 
         singerAdapter = new SingerAdapter();
 
@@ -59,18 +58,18 @@ public class FragmentShop extends Fragment {
                 builder.setPositiveButton("예",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                if(dbHelper.selectUserpoint()<items.get(i).getCost()){
-                                    Toast.makeText(getActivity().getApplicationContext(),(items.get(i).getCost()-dbHelper.selectUserpoint())+"포인트가 부족하여 구매할 수 없습니다.",Toast.LENGTH_LONG).show();
-                                }else {
+                                if (dbHelper.selectUserpoint() < items.get(i).getCost()) {
+                                    Toast.makeText(getActivity().getApplicationContext(), (items.get(i).getCost() - dbHelper.selectUserpoint()) + "포인트가 부족하여 구매할 수 없습니다.", Toast.LENGTH_LONG).show();
+                                } else {
                                     dbHelper.minusUserPoint(items.get(i).getCost());
-                                    Toast.makeText(getActivity().getApplicationContext(),items.get(i).getCost()+"포인트를 지불하여 구매하였습니다.",Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity().getApplicationContext(), items.get(i).getCost() + "포인트를 지불하여 구매하였습니다.", Toast.LENGTH_LONG).show();
                                 }
                             }
                         });
                 builder.setNegativeButton("아니오",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(getActivity().getApplicationContext(),"아니오를 선택했습니다.",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity().getApplicationContext(), "아니오를 선택했습니다.", Toast.LENGTH_LONG).show();
                             }
                         });
                 builder.show();
@@ -86,7 +85,7 @@ public class FragmentShop extends Fragment {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 dbHelper.deleteShopItem(items.get(i).getName());
-                                Toast.makeText(getActivity().getApplicationContext(),items.get(i).getName()+"아이템을 삭제하였습니다.",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity().getApplicationContext(), items.get(i).getName() + "아이템을 삭제하였습니다.", Toast.LENGTH_LONG).show();
                                 items.remove(i);
                                 singerAdapter.notifyDataSetChanged();
                             }
@@ -94,7 +93,7 @@ public class FragmentShop extends Fragment {
                 builder.setNegativeButton("아니오",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(getActivity().getApplicationContext(),"아니오를 선택했습니다.",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity().getApplicationContext(), "아니오를 선택했습니다.", Toast.LENGTH_LONG).show();
                             }
                         });
                 builder.show();
@@ -107,7 +106,7 @@ public class FragmentShop extends Fragment {
             public void onClick(View view) {
                 String name = editText.getText().toString().trim();
                 int cost = Integer.parseInt(editText2.getText().toString().trim());
-                items.add(new SingerShopItem(name,cost, getResources().getIdentifier("index"+items.size(),"drawable", getContext().getPackageName())));
+                items.add(new SingerShopItem(name, cost, getResources().getIdentifier("index" + items.size(), "drawable", getContext().getPackageName())));
                 singerAdapter.notifyDataSetChanged();
                 dbHelper.setShopItem(name, cost);
                 //singerAdapter.addItem(new SingerShopItem(name, cost, R.drawable.gift));
@@ -117,7 +116,7 @@ public class FragmentShop extends Fragment {
         return view;
     }
 
-    public void createShopList(){
+    public void createShopList() {
         items.clear();
         String temp[] = dbHelper.selectShopItem().split("\n");
         String data[][] = new String[2][temp.length];
@@ -127,7 +126,7 @@ public class FragmentShop extends Fragment {
             }
             Log.e("sangeun", data[0][i]);
             Log.e("sangeun", data[1][i]);
-            items.add(new SingerShopItem(data[0][i], Integer.parseInt(data[1][i]), getResources().getIdentifier("index"+i,"drawable", getContext().getPackageName())));
+            items.add(new SingerShopItem(data[0][i], Integer.parseInt(data[1][i]), getResources().getIdentifier("index" + i, "drawable", getContext().getPackageName())));
         }
     }
 
@@ -137,7 +136,7 @@ public class FragmentShop extends Fragment {
             return items.size();
         }
 
-        public void addItem(SingerShopItem singerItem){
+        public void addItem(SingerShopItem singerItem) {
             items.add(singerItem);
         }
 

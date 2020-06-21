@@ -18,16 +18,16 @@ public class Goal implements Serializable {
         return goalTitle;
     }
 
+    public void setGoalTitle(String goalTitle) {
+        this.goalTitle = goalTitle;
+    }
+
     public int getIndexNumber() {
         return indexNumber;
     }
 
     public void setIndexNumber(int indexNumber) {
         this.indexNumber = indexNumber;
-    }
-
-    public void setGoalTitle(String goalTitle) {
-        this.goalTitle = goalTitle;
     }
 
     @Override

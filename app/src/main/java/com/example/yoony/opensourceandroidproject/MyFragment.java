@@ -26,10 +26,10 @@ import java.util.Comparator;
 
 
 public class MyFragment extends Fragment {
-    ArrayList<SampleData> a=new ArrayList<SampleData>();//데이터베이스
+    private static final String ARG_NO = "ARG_NO";
+    ArrayList<SampleData> a = new ArrayList<SampleData>();//데이터베이스
     MyAdapter myAdapter;
     DBHelper dbHelper;
-
     private int[] color = new int[]{
             Color.parseColor("#e9f7e1"), Color.parseColor("#f4d9e3"),
             Color.parseColor("#fdf2d8"), Color.parseColor("#e5dee1"),
@@ -38,15 +38,13 @@ public class MyFragment extends Fragment {
             Color.parseColor("#d2efe3"), Color.parseColor("#d6e2fc")
     };
 
-    private static final String ARG_NO = "ARG_NO";
-
     public MyFragment() {
     }
 
-    public static MyFragment getInstace(int no){
+    public static MyFragment getInstace(int no) {
         MyFragment fragment = new MyFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_NO,no);
+        args.putInt(ARG_NO, no);
         fragment.setArguments(args);
         return fragment;
     }
@@ -54,13 +52,13 @@ public class MyFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.listfragment,null);
-        dbHelper=new DBHelper(view.getContext(),"QuestApp.db",null,1);
-        if(dbHelper.sortTodo(getArguments().getInt(ARG_NO,0))!="") {
+        View view = inflater.inflate(R.layout.listfragment, null);
+        dbHelper = new DBHelper(view.getContext(), "QuestApp.db", null, 1);
+        if (dbHelper.sortTodo(getArguments().getInt(ARG_NO, 0)) != "") {
             createList();
         }
-        myAdapter = new MyAdapter(getActivity(),a);
-        ListView listView = (ListView)view.findViewById(R.id.listView);
+        myAdapter = new MyAdapter(getActivity(), a);
+        ListView listView = (ListView) view.findViewById(R.id.listView);
         listView.setDivider(new ColorDrawable(Color.TRANSPARENT));
         listView.setDividerHeight(15);
         listView.setAdapter(myAdapter);//어댑터 연결
@@ -68,8 +66,8 @@ public class MyFragment extends Fragment {
         return view;
     }
 
-    public void createList(){
-        String temp[] = dbHelper.sortTodo(getArguments().getInt(ARG_NO,0)).split("\n");
+    public void createList() {
+        String temp[] = dbHelper.sortTodo(getArguments().getInt(ARG_NO, 0)).split("\n");
         String data[][] = new String[5][temp.length];
         for (int i = 0; i < temp.length; i++) {
             for (int k = 0; k < 5; k++) {
@@ -82,16 +80,17 @@ public class MyFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int no = getArguments().getInt(ARG_NO,0);
+        int no = getArguments().getInt(ARG_NO, 0);
         String text = "" + no + "번째 프래그먼트";
-        Log.d("MyFragment","onCreate"+text);
+        Log.d("MyFragment", "onCreate" + text);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        int no = getArguments().getInt(ARG_NO,0);
+        int no = getArguments().getInt(ARG_NO, 0);
     }
+
     public class MyAdapter extends BaseAdapter {
 
         Context mContext = null;
@@ -139,7 +138,7 @@ public class MyFragment extends Fragment {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
                         dbHelper.plusUserPoint(10);
-                        Toast.makeText(getActivity().getApplicationContext(),"10포인트가 적립되었습니다.",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity().getApplicationContext(), "10포인트가 적립되었습니다.", Toast.LENGTH_LONG).show();
                         DBHelper dbHelper = new DBHelper(view.getContext(), "QuestApp.db", null, 1);
                         dbHelper.updateisDone(sample.get(position).getId(), 1);
                         sample.get(position).setIschecked(true);
@@ -155,17 +154,18 @@ public class MyFragment extends Fragment {
             });
             return view;
         }
-        public void sort(){
+
+        public void sort() {
             Collections.sort(sample, new Comparator<SampleData>() {
                 @Override
                 public int compare(SampleData o1, SampleData o2) {
                     //수행 여부로 정렬
                     //메인퀘스트로 한번 더 정렬해야됨
-                    int x=0;
+                    int x = 0;
                     if (o1.getisDone() < o2.getisDone()) {
                         x = -1;
-                    }else if(o1.getisDone()==o2.getisDone()){
-                        if(o1.getQuest()<o2.getQuest()){
+                    } else if (o1.getisDone() == o2.getisDone()) {
+                        if (o1.getQuest() < o2.getQuest()) {
                             x = -1;
                         }
                     }

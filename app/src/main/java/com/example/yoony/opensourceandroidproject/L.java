@@ -4,10 +4,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 public class L {
-    private static final String ct = System.getProperty("line.separator");
-    private static String TAG = "YLogger";
-    public static boolean LOG_ENABLED = true;
-    private static boolean cu = false;
     public static final int VERBOSE = 1;
     public static final int DEBUG = 2;
     public static final int INFO = 3;
@@ -16,7 +12,11 @@ public class L {
     public static final int ASSET = 6;
     public static final int JSON = 7;
     public static final int XML = 8;
+    private static final String ct = System.getProperty("line.separator");
+    public static boolean LOG_ENABLED = true;
     public static int LOG_LEVEL = 1;
+    private static String TAG = "YLogger";
+    private static boolean cu = false;
 
     public L() {
     }

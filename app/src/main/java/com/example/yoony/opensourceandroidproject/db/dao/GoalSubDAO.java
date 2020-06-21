@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.yoony.opensourceandroidproject.L;
 import com.example.yoony.opensourceandroidproject.db.DBConst;
-import com.example.yoony.opensourceandroidproject.db.model.Goal;
 import com.example.yoony.opensourceandroidproject.db.model.GoalSub;
 
 import java.util.ArrayList;

@@ -1,13 +1,11 @@
 package com.example.yoony.opensourceandroidproject;
 
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class SubItemView {
     public EditText etInput;
     public TextView tvInput;
-
 
 
     public SubItemView(EditText etInput) {
