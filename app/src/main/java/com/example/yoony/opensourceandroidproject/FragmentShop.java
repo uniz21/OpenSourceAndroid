@@ -97,7 +97,7 @@ public class FragmentShop extends Fragment {
                             }
                         });
                 builder.show();
-                return false;
+                return true;
             }
         });
 
